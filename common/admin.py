@@ -8,7 +8,7 @@ from .models import User
 
 class CustomUserAdmin(UserAdmin):
     list_display = UserAdmin.list_display + (
-        'phone', 'last_login', 'updated_at', 'date_joined'
+        'is_active', 'phone', 'last_login', 'updated_at', 'date_joined'
     )
 
     fieldsets = UserAdmin.fieldsets + (

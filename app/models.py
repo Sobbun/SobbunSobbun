@@ -105,15 +105,6 @@ class ChatMessage(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    nickname = models.CharField(max_length=15, blank=True)
-    content = models.TextField()
-    picture = models.TextField()
-
-    updated_at = models.DateTimeField(auto_now=True)
-
-
 class Rate(models.Model):
     user_from = models.ManyToManyField(User, related_name="rating_to")
     user_to = models.ForeignKey(User, on_delete=models.CASCADE)
