@@ -1,72 +1,29 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-from common.models import User
+from common.models import User, Area, AbstractPost, AbstractTag, AbstractCategory
+from django.contrib.auth import get_user_model
+
 
 # Create your models here.
-class Area(models.Model):
-    code = models.IntegerField()
-    name = models.TextField()
-    center = models.TextField()
-    version = models.DateField()
+User = get_user_model()
 
-    def __str__(self):
-        return self.name
 
-class Event(models.Model):
+class GoodsCategory(AbstractCategory):
+    pass
+
+class SobunTag(AbstractTag):
+    pass
+
+class SobunPost(AbstractPost):
+    user = models.ForeignKey(
+        User, null=True, related_name='sobun_posts', on_delete=models.SET_NULL)
     area = models.ForeignKey(Area, null=True, on_delete=models.SET_NULL)
 
-    name = models.TextField(max_length=80)
-    description = models.TextField()
-    status = models.CharField(max_length=20, blank=True)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self) -> str:
-        return self.name
-
-
-class GoodsCategory(models.Model):
-    name = models.TextField()
-
-
-class LocationVerification(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    area = models.ForeignKey(Area, on_delete=models.CASCADE)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        unique_together = ["user", "area"]
-
-    def __str__(self) -> str:
-        return self.user.user.username
-
-
-class TrustLevel(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    level = models.FloatField()
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.user.user.username
-
-
-class SobunPost(models.Model):
-    goods_category = models.ForeignKey(
-        GoodsCategory, null=True, on_delete=models.SET_NULL)
-    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    area = models.ForeignKey(Area, null=True, on_delete=models.SET_NULL)
-
-    title = models.TextField()
     product = models.TextField()
-    description = models.TextField()
-    picture = models.TextField()
     place = models.TextField()
     schedule = models.DateTimeField()
+
+    category = models.ForeignKey(GoodsCategory, on_delete=models.SET_NULL, null=True)
+    tags = models.ManyToManyField(SobunTag)
 
     is_deleted = models.BooleanField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -74,8 +31,9 @@ class SobunPost(models.Model):
 
 
 class Sobun(models.Model):
-    post = models.ForeignKey(SobunPost, on_delete=models.PROTECT)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(SobunPost, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(
+        User, related_name='sobuns', on_delete=models.CASCADE)
 
     time = models.DateTimeField()
     whether = models.BooleanField()
@@ -84,32 +42,21 @@ class Sobun(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = ["post", "user"]
+        unique_together = [("post", "user")]
+        index_together = [("post", "user")]
+        verbose_name_plural = "Sobun"
+
+    def __str__(self):
+        return f"Sobun from {self.post} to {self.user}"
 
 
-class ChatRoom(models.Model):
-    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    post = models.ForeignKey(SobunPost, null=True, on_delete=models.SET_NULL)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-
-class ChatMessage(models.Model):
-    room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
-    sent_user = models.ForeignKey(User, on_delete=models.CASCADE)
-    messages = models.TextField(max_length=1000)
-    checked = models.BooleanField()
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-
-class Rate(models.Model):
-    user_from = models.ManyToManyField(User, related_name="rating_to")
-    user_to = models.ForeignKey(User, on_delete=models.CASCADE)
-    sobun_post = models.ForeignKey(
-        SobunPost, null=True, on_delete=models.SET_NULL)
+class SobunRate(models.Model):
+    user_from = models.ForeignKey(
+        User, related_name='ratings_given', on_delete=models.SET_NULL, null=True)
+    user_to = models.ForeignKey(
+        User, related_name='ratings_received', on_delete=models.CASCADE)
+    sobun = models.ForeignKey(
+        Sobun, null=True, on_delete=models.SET_NULL)
 
     type = models.IntegerField()
     detail = models.TextField(max_length=300)

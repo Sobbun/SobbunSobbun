@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "app.apps.AppConfig",
     "common.apps.CommonConfig",
+    "chat.apps.ChatConfig",
     "phonenumber_field"
 ]
 
