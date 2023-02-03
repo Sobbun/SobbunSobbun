@@ -17,7 +17,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nickname = models.CharField(max_length=15, blank=True)
     content = models.TextField()
-    picture = models.ImageField(upload_to='profile_pictures')
+    picture = models.ImageField(upload_to='pictures/profile')
 
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -55,9 +55,6 @@ class LocationVerification(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        unique_together = ["user", "area"]
 
     class Meta:
         unique_together = [("user", "area")]
@@ -111,7 +108,7 @@ class AbstractPost(models.Model):
 
     title = models.CharField(max_length=100)
     description = models.TextField()
-    picture = models.ImageField(upload_to='post_pictures')
+    picture = models.ImageField(upload_to='pictures/post')
 
     category = models.ForeignKey(
         AbstractCategory, on_delete=models.SET_NULL, related_name='posts', null=True)
@@ -120,6 +117,9 @@ class AbstractPost(models.Model):
     is_deleted = models.BooleanField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
 
     class Meta:
         abstract = True

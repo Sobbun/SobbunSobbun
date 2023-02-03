@@ -25,6 +25,9 @@ class SobunPost(AbstractPost):
     category = models.ForeignKey(GoodsCategory, on_delete=models.SET_NULL, null=True)
     tags = models.ManyToManyField(SobunTag)
 
+    sobun_price = models.IntegerField()
+    sobun_unit = models.CharField(max_length=30)
+
 
 class Sobun(models.Model):
     post = models.ForeignKey(SobunPost, on_delete=models.SET_NULL, null=True)
