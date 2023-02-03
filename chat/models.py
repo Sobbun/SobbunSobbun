@@ -27,7 +27,7 @@ class ChatMessage(models.Model):
 
     checked_by = models.ManyToManyField(User, related_name='checked_messages')
     edited = models.BooleanField(default=False)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"ChatMessage {self.id} in room {self.room_id} by {self.author}"
@@ -42,4 +42,4 @@ class ChatMessageHistory(models.Model):
     message = models.ForeignKey(
         ChatMessage, on_delete=models.CASCADE, related_name='versions')
     content = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
