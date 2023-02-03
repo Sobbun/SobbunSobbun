@@ -15,9 +15,12 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nickname = models.CharField(max_length=15, blank=True)
     content = models.TextField()
-    picture = models.ImageField()
+    picture = models.ImageField(upload_to='profile_pictures')
 
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user
 
 class Area(models.Model):
     code = models.IntegerField()
@@ -54,7 +57,7 @@ class LocationVerification(models.Model):
     class Meta:
         unique_together = [("user", "area")]
         index_together = [("user", "area")]
-        verbose_name_plural = "Sobun"
+        verbose_name_plural = "LocationVerification"
     
     def __str__(self):
         return f"Location verification of {self.user} to {self.area}"
@@ -73,11 +76,16 @@ class TrustLevel(models.Model):
 class AbstractCategory(models.Model):
     name = models.CharField(max_length=100)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     class Meta:
         abstract = True
 
 class AbstractTag(models.Model):
     name = models.CharField(max_length=100)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         abstract = True
@@ -88,7 +96,7 @@ class AbstractPost(models.Model):
 
     title = models.TextField()
     description = models.TextField()
-    picture = models.ImageField(upload_to='pictures')
+    picture = models.ImageField(upload_to='post_pictures')
 
     category = models.ForeignKey(AbstractCategory, on_delete=models.SET_NULL, related_name='posts', null=True)
     tags = models.ManyToManyField(AbstractTag, related_name='posts')

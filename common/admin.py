@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
-from .models import User
+from .models import User, Profile, Area, Event, LocationVerification, TrustLevel
 
 # Register your models here.
 
-
+@admin.register(User)
 class CustomUserAdmin(UserAdmin):
     list_display = UserAdmin.list_display + (
         'is_active', 'phone', 'last_login', 'updated_at', 'date_joined'
@@ -22,5 +22,23 @@ class CustomUserAdmin(UserAdmin):
     def __init__(self, *args, **kwargs):
         super(UserAdmin, self).__init__(*args, **kwargs)
 
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    fields = ('user', 'nickname', 'content', 'picture', 'updated_at')
 
-admin.site.register(User, CustomUserAdmin)
+
+@admin.register(Area)
+class AreaAdmin(admin.ModelAdmin):
+    fields = ('code', 'name', 'center', 'version')
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    fields = ('id', 'name', 'area', 'status', 'updated_at', 'created_at')
+
+@admin.register(LocationVerification)
+class LocationVerificationAdmin(admin.ModelAdmin):
+    fields = ('user', 'area', 'updated_at', 'created_at')
+
+@admin.register(TrustLevel)
+class TrustLevelAdmin(admin.ModelAdmin):
+    fields = ('user', 'level' 'updated_at', 'created_at')

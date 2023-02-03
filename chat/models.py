@@ -18,6 +18,9 @@ class ChatRoom(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f'ChatRoom ${self.id}'
+
 
 class ChatMessage(models.Model):
     room = models.ForeignKey(
@@ -43,3 +46,6 @@ class ChatMessageHistory(models.Model):
         ChatMessage, on_delete=models.CASCADE, related_name='versions')
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"ChatMessageHistory {self.message.id} in room {self.message.room_id} by {self.message.author} at {self.created_at}"
