@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MinValueValidator, MaxValueValidator
 from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
@@ -67,7 +68,7 @@ class LocationVerification(models.Model):
 
 class TrustLevel(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    level = models.FloatField(default=50)
+    level = models.FloatField(default=50, validators=[MinValueValidator(0.0), MaxValueValidator(100.0)])
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

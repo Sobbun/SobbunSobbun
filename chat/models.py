@@ -7,8 +7,11 @@ User = get_user_model()
 
 
 class ChatRoom(models.Model):
+    # 채팅 참여자
     participants = models.ManyToManyField(User, related_name='chat_rooms')
 
+    # 채팅시 토픽(상단 공지) 설정할때 사용.
+    # GenericForeignKey를 사용하여 text와 text가 아닌 경우를 구분한다.
     topic_type = models.ForeignKey(
         ContentType, on_delete=models.SET_NULL, null=True, blank=True)
     topic_id = models.PositiveIntegerField(null=True, blank=True)
@@ -22,10 +25,11 @@ class ChatRoom(models.Model):
         return f'ChatRoom ${self.id}'
 
 
+# 채팅 메세지
 class ChatMessage(models.Model):
     room = models.ForeignKey(
         ChatRoom, on_delete=models.CASCADE, related_name='messages')
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     content = models.TextField()
 
     checked_by = models.ManyToManyField(User, related_name='checked_messages')

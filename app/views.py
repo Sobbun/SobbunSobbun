@@ -21,7 +21,7 @@ def sobun_list(request):
     context = {
         'posts': page_obj
     }
-    return render(request, 'app/sobun_list.html', context)
+    return render(request, 'app/sobun/list.html', context)
 
 
 def sobun_post(request, post_id):
@@ -29,4 +29,4 @@ def sobun_post(request, post_id):
     context = {
         'post': post
     }
-    return render(request, 'app/sobun_post.html', context)
+    return render(request, 'app/sobun/post.html', context)
