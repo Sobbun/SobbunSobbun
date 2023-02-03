@@ -18,16 +18,12 @@ class SobunPost(AbstractPost):
         User, null=True, related_name='sobun_posts', on_delete=models.SET_NULL)
     area = models.ForeignKey(Area, null=True, on_delete=models.SET_NULL)
 
-    product = models.TextField()
-    place = models.TextField()
+    product = models.CharField(max_length=100)
+    place = models.CharField(max_length=100)
     schedule = models.DateTimeField()
 
     category = models.ForeignKey(GoodsCategory, on_delete=models.SET_NULL, null=True)
     tags = models.ManyToManyField(SobunTag)
-
-    is_deleted = models.BooleanField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
 
 class Sobun(models.Model):

@@ -6,21 +6,24 @@ from .models import GoodsCategory, SobunTag, SobunPost, Sobun, SobunRate
 
 @admin.register(GoodsCategory)
 class GoodsCategoryAdmin(admin.ModelAdmin):
-    fields = ('id', 'name')
+    fields = ['name']
 
 
 @admin.register(SobunTag)
 class SobunTagAdmin(admin.ModelAdmin):
-    fields = ('id', 'name')
+    fields = ['name']
+
 
 @admin.register(SobunPost)
 class SobunPostAdmin(admin.ModelAdmin):
-    fields = ('id', 'title', 'user', 'category', 'tags', 'is_deleted', 'updated_at', 'created_at')
+    fields = ['title', 'user', 'description', 'category', 'tags', 'is_deleted']
+
 
 @admin.register(Sobun)
 class SobunAdmin(admin.ModelAdmin):
-    fields = ('id', 'post', 'user', 'time', 'whether', 'updated_at', 'created_at')
+    fields = ['post', 'user', 'time', 'whether']
+
 
 @admin.register(SobunRate)
 class SobunRateAdmin(admin.ModelAdmin):
-    fields = ('id', 'user_from', 'user_to', 'sobun', 'type', 'detail' 'updated_at', 'created_at')
+    fields = ['user_from', 'user_to', 'sobun', 'type', 'detail']

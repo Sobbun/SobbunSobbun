@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title }} - 소뿐소뿐</title>
+    <title>{% block title %}로딩중{% endblock %} - 소뿐소뿐</title>
 
     <meta
       name="viewport"
@@ -31,6 +31,7 @@
     <script defer src="{% static 'js/script.js' %}"></script>
 </head>
 <body>
-
+  {% block content %}
+  {% endblock %}
 </body>
 </html>

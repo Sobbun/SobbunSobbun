@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
+
+
 class User(AbstractUser):
     phone = PhoneNumberField(unique=True, null=False, blank=False)
     updated_at = models.DateTimeField(auto_now=True)
@@ -22,6 +24,7 @@ class Profile(models.Model):
     def __str__(self):
         return self.user
 
+
 class Area(models.Model):
     code = models.IntegerField()
     name = models.TextField()
@@ -30,6 +33,7 @@ class Area(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Event(models.Model):
     area = models.ForeignKey(Area, null=True, on_delete=models.SET_NULL)
@@ -43,6 +47,7 @@ class Event(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
 
 class LocationVerification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -58,13 +63,14 @@ class LocationVerification(models.Model):
         unique_together = [("user", "area")]
         index_together = [("user", "area")]
         verbose_name_plural = "LocationVerification"
-    
+
     def __str__(self):
         return f"Location verification of {self.user} to {self.area}"
 
+
 class TrustLevel(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    level = models.FloatField()
+    level = models.FloatField(default=50)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -78,8 +84,13 @@ class AbstractCategory(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
     class Meta:
         abstract = True
+
 
 class AbstractTag(models.Model):
     name = models.CharField(max_length=100)
@@ -87,18 +98,23 @@ class AbstractTag(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         abstract = True
+
 
 class AbstractPost(models.Model):
     user = models.ForeignKey(
         User, null=True, related_name='posts', on_delete=models.SET_NULL)
 
-    title = models.TextField()
+    title = models.CharField(max_length=100)
     description = models.TextField()
     picture = models.ImageField(upload_to='post_pictures')
 
-    category = models.ForeignKey(AbstractCategory, on_delete=models.SET_NULL, related_name='posts', null=True)
+    category = models.ForeignKey(
+        AbstractCategory, on_delete=models.SET_NULL, related_name='posts', null=True)
     tags = models.ManyToManyField(AbstractTag, related_name='posts')
 
     is_deleted = models.BooleanField()

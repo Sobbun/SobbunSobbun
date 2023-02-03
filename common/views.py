@@ -1,21 +1,37 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
-from .forms import UserForm
+from .forms import SignupForm, UpdateProfileForm
 
 
 # 가입
 def signup(request):
     if request.method == "POST":
-        form = UserForm(request.POST)
+        form = SignupForm(request.POST)
         if form.is_valid():
+            # 유저 가입             
             user = form.save(commit=False)
             user.save()
-            return redirect('app:index')
+            
+            user.refresh_from_db()
+
+
+            return redirect('common:profile_edit')
     else:
-        form = UserForm()
+        form = SignupForm()
     return render(request, 'common/signup.html', { 'form': form })
 
 
 # 프로필
-def profile(request):
-    pass
+@login_required
+def profile_update(request):
+    if request.method == "POST":
+        form = UpdateProfileForm(request.POST)
+        if form.is_valid():
+            
+
+
+            return redirect('common:profile_edit')
+    else:
+        form = UpdateProfileForm()
+    return render(request, 'common/profile_update.html', { 'form': form })
