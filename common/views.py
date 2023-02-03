@@ -4,6 +4,11 @@ from django.contrib.auth.decorators import login_required
 from .forms import SignupForm, UpdateProfileForm
 
 
+
+def index(request):
+    return render(request, 'common/index.html')
+
+
 # 가입
 def signup(request):
     if request.method == "POST":

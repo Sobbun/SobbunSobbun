@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+{% block title %}로그인{% endblock %}
+{% block content%}
 <div class="container my-3">
     <form method="post" action="{% url 'common:login' %}">
         {% csrf_token %}
@@ -14,3 +17,4 @@
         <button type="submit" class="btn btn-primary">로그인</button>
     </form>
 </div>
+{% endblock %}
