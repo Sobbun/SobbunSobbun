@@ -4,9 +4,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from phonenumber_field.modelfields import PhoneNumberField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
 # Create your models here.
-
 
 class User(AbstractUser):
     phone = PhoneNumberField(unique=True, null=False, blank=False)
@@ -38,20 +36,6 @@ class Area(models.Model):
         return self.name
 
 
-class Event(models.Model):
-    area = models.ForeignKey(Area, null=True, on_delete=models.SET_NULL)
-
-    name = models.CharField(max_length=80)
-    description = models.TextField()
-    status = models.CharField(max_length=20, blank=True)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self) -> str:
-        return self.name
-
-
 class LocationVerification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
@@ -69,8 +53,10 @@ class LocationVerification(models.Model):
 
 
 class TrustLevel(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='trust_level')
-    level = models.FloatField(default=50, validators=[MinValueValidator(0.0), MaxValueValidator(100.0)])
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name='trust_level')
+    level = models.FloatField(default=50, validators=[
+                              MinValueValidator(0.0), MaxValueValidator(100.0)])
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -126,6 +112,26 @@ class AbstractPost(models.Model):
 
     class Meta:
         abstract = True
+
+
+class EventCategory(AbstractCategory):
+    pass
+
+
+class EventTag(AbstractTag):
+    pass
+
+
+class Event(AbstractPost):
+    user = models.ForeignKey(
+        User, null=True, related_name='event_posts', on_delete=models.SET_NULL)
+    area = models.ForeignKey(Area, null=True, on_delete=models.SET_NULL)
+
+    status = models.CharField(max_length=20, blank=True)
+
+    category = models.ForeignKey(
+        EventCategory, on_delete=models.SET_NULL, null=True)
+    tags = models.ManyToManyField(EventTag)
 
 # 생성시 기본 인스턴스
 @receiver(post_save, sender=User)

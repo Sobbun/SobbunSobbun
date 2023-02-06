@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
-from .models import User, Profile, Area, Event, LocationVerification, TrustLevel
+from .models import User, Profile, Area, Event, LocationVerification, TrustLevel,  EventCategory, EventTag
 
 # Register your models here.
 
@@ -33,7 +33,15 @@ class AreaAdmin(admin.ModelAdmin):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    fields = ('name', 'area', 'description', 'status',  )
+    fields = ('title', 'user', 'description', 'picture', 'status', 'category',  'tags', 'is_deleted')
+
+@admin.register(EventCategory)
+class EventCategoryAdmin(admin.ModelAdmin):
+    fields = ['name']
+
+@admin.register(EventTag)
+class EventTagAdmin(admin.ModelAdmin):
+    fields = ['name']
 
 @admin.register(LocationVerification)
 class LocationVerificationAdmin(admin.ModelAdmin):
