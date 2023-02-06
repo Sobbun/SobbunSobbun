@@ -24,7 +24,7 @@ class CustomUserAdmin(UserAdmin):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    fields = ('user', 'bio',)
+    fields = ('user', 'bio', 'nickname', 'picture')
 
 
 @admin.register(Area)
