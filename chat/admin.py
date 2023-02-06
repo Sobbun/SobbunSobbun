@@ -5,13 +5,13 @@ from .models import ChatRoom, ChatMessage, ChatMessageHistory
 
 @admin.register(ChatRoom)
 class ChatRoomAdmin(admin.ModelAdmin):
-    fields = ('participants ', 'topic', 'updated_at', 'created_at')
+    fields = ('participants', 'topic_type', 'topic_id', 'topic_text',)
 
 
 @admin.register(ChatMessage)
 class ChatMessageAdmin(admin.ModelAdmin):
-    fields = ('room', 'content', 'author', 'created_at')
+    fields = ('room', 'content', 'author',)
 
 @admin.register(ChatMessageHistory)
 class ChatMessageHistoryAdmin(admin.ModelAdmin):
-    fields = ('message', 'content', 'created_at')
+    fields = ('message', 'content',)

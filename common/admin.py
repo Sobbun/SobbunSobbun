@@ -37,11 +37,11 @@ class EventAdmin(admin.ModelAdmin):
 
 @admin.register(EventCategory)
 class EventCategoryAdmin(admin.ModelAdmin):
-    fields = ['name']
+    fields = ('name',)
 
 @admin.register(EventTag)
 class EventTagAdmin(admin.ModelAdmin):
-    fields = ['name']
+    fields = ('name',)
 
 @admin.register(LocationVerification)
 class LocationVerificationAdmin(admin.ModelAdmin):

@@ -37,11 +37,12 @@ class ChatMessage(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"ChatMessage {self.id} in room {self.room_id} by {self.author}"
+        return f"ChatMessage #{self.id} in room {self.room_id} by {self.author}"
 
     @property
     def checked_status(self):
-        count = self.checked_by.count()
+        # should -1 as sender is checked.
+        count = self.checked_by.count() - 1
         return 2 if count > 1 else count
 
 
