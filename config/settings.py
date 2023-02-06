@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "app.apps.AppConfig",
     "common.apps.CommonConfig",
     "chat.apps.ChatConfig",
+    "event.apps.EventConfig",
     "phonenumber_field"
 ]
 

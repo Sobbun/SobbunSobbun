@@ -23,4 +23,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("common/", include("common.urls")),
     path("chat/", include("chat.urls")),
+    path("event/", include("event.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -113,26 +113,6 @@ class AbstractPost(models.Model):
     class Meta:
         abstract = True
 
-
-class EventCategory(AbstractCategory):
-    pass
-
-
-class EventTag(AbstractTag):
-    pass
-
-
-class Event(AbstractPost):
-    user = models.ForeignKey(
-        User, null=True, related_name='event_posts', on_delete=models.SET_NULL)
-    area = models.ForeignKey(Area, null=True, on_delete=models.SET_NULL)
-
-    status = models.CharField(max_length=20, blank=True)
-
-    category = models.ForeignKey(
-        EventCategory, on_delete=models.SET_NULL, null=True)
-    tags = models.ManyToManyField(EventTag)
-
 # 생성시 기본 인스턴스
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
