@@ -1,5 +1,8 @@
 from django.db import models
-from common.models import User, Area, AbstractPost, AbstractTag, AbstractCategory
+from django.contrib.auth import get_user_model
+from common.models import Area, AbstractPost, AbstractTag, AbstractCategory
+
+User = get_user_model()
 
 # Create your models here.
 class EventCategory(AbstractCategory):
