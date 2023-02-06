@@ -1,13 +1,31 @@
 {% extends 'base.html' %}
 {% block title%}이벤트 리스트{% endblock %}
 {% block content %}
-  {% if posts %}
+{% if posts %}
+  <div class="container1">
+    {% for post in posts %}
+      <div id = "container">
+        <div id="content">
+          <hr>
+          {% if post.picture %}
+            <img src="{{ post.picture.url }}" alt="">
+          {% else %}
+            <img src="{% static 'img/logo.png' %}" alt="">
+          {% endif %}
+          <h2 style="font-size: 20px;"><a href="{% url 'event:post' post.id %}">{{ post.title }}</a></h2>
+          <p style="font-size: 13px;">{{ post.description }} </p>
+          <br>
+          <h4 style="font-size: 15px;">{{ post.start_date|default_if_none: "지금" }} ~ {{ post.end_date|default_if_none: "미정" }}</h4>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+{% endif %}
+  {% if debug and posts %}
     <ul>
       {% for post in posts %}
-        <li><a href="{% url 'common:event_post' post.id %}">{{ post.title }}</a></li>
+        <li><a href="{% url 'event:post' post.id %}">{{ post.title }}</a></li>
       {% endfor %}
     </ul>
-  {% else %}
-  <p>이벤트가 없습니다.</p>
   {% endif %}
 {% endblock %}
