@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 import common.views as commonViews
 from .models import SobunPost
+from .forms import SobunPostForm
 from django.core.paginator import Paginator
 
 # Create your views here.
@@ -30,3 +31,17 @@ def sobun_post(request, post_id):
         'post': post
     }
     return render(request, 'app/sobun/post.html', context)
+
+
+def sobun_create(request):
+    if request.method == 'POST':
+        form = SobunPostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            return redirect('app:index')
+    else:
+        form = SobunPostForm()
+    context = {'form': form}
+    return render(request, 'app/sobun/create.html', context)
