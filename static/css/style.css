@@ -1,134 +1,132 @@
-a{
+/***************** MAIN PAGE *****************/
+* {
+  margin-top: 0;
+}
+a {
   text-decoration: none;
   color: black;
 }
-
 nav ul {
   width: 100%;
   background-color: lightgray;
   list-style-type: none;
-  margin: 0;
   padding-left: 20%;
+  margin-top: 0;
 }
-
-nav ul li{
+nav ul li {
   display: inline-block;
 }
 
-.topnav{
+.topnav {
   position: relative;
   margin-left: 50px;
 }
 
 /* 게시판,채팅 등 네비게이션바 항목들*/
-.topnav_menu{               
-  padding:16px 50px;
+.topnav_menu {
+  padding: 16px 50px;
   font-size: 16px;
   cursor: pointer;
 }
 /* 드롭다운으로 들어갈 메뉴들 처리, display none으로 일단 숨겨줌*/
-.dropdown_content{
+.dropdown_content {
   position: absolute;
   min-width: 500px;
-  
+  display: none;
 }
 /* 드롭다운 메뉴들 세부 설정*/
-.dropdown_content a{
+.dropdown_content a {
   color: black;
   text-decoration: none;
-  display: block;
   padding: 7px 10px;
   text-align: center;
   border-radius: 30%;
   margin-right: 15px;
   margin-top: 10px;
-  background-color:#DCDCDC	;
+  background-color: #dcdcdc;
 }
 /* 상단 메뉴 마우스 올릴 시 색 변환*/
-.topnav_menu:hover{              
+.topnav_menu:hover {
   background-color: gray;
 }
 /* 드롭다운 항목에 hover 적용 */
-.dropdown_content a:hover{
+.dropdown_content a:hover {
   background-color: gray;
 }
 
-.dropdown_content a{
-  float:left;
+.dropdown_content a {
+  float: left;
 }
 /*이미지 크기 및 위치 조정*/
-.imag{
+.imag {
   width: 45px;
   float: left;
   margin: 2px 30px;
-  position: fixed;
 }
 /* 로그인/회원가입 */
-.login{
-  font-size: small; 
+.login {
+  font-size: small;
   cursor: pointer;
 }
-.login_menu{
+.login_menu {
   padding: 10px;
 }
-.login:hover{
+.login:hover {
   background-color: gray;
 }
 
 /*검색*/
-div.search{
-  height:40px;
+div.search {
+  height: 40px;
   width: 400px;
   border: 1px solid black;
-  margin-top:10px;
+  margin-top: 15px;
+  margin-left: 5px; /*왜 안먹지??*/
   padding: 0;
   float: right;
 }
-input{
+.main_search {
   font-size: 15px;
-  width: 325px ;
+  width: 325px;
   padding: 10px;
   border: 0px;
-  float:left;
+  float: left;
 }
-.s{
+.s {
   width: 50px;
   height: 100%;
   float: right;
 }
 
-
 /*글쓰기*/
-.write{
-  width:80px;
-  height:42px;
-  margin-top: 10px;
+div.write {
+  width: 80px;
+  height: 42px;
+  margin-top: 15px;
   float: right;
-  margin-right: 10px;
-}
-.w{
-  width: 100%;
-  height: 100%;
   margin-left: 10px;
 }
+.w {
+  width: 100%;
+  height: 100%;
+}
 
-/* --------------------------------  */
-
+/***************** 게시판 *****************/
 * {
   margin: 0;
   padding: 0;
-  /*box-sizing: border-box;*/       /*로고 없어짐*/
+  /*box-sizing: border-box;*/ /*로고 없어짐*/
 }
-#container {
+#container_post {
   margin: 0 auto;
   width: 80%;
 }
-#content {
+#content_post {
   width: 100%;
   height: 120px;
-  background-color: white;  
+  background-color: white;
 }
-#content > img {
+#content_post > img {
   width: 100px;
   height: 100px;
   margin-left: 10px;
@@ -136,13 +134,199 @@ input{
   margin-top: 5px;
   float: left;
 }
-#content > h2 {
+#content_post > h2 {
   margin-top: 5px;
-  float: clear
+  float: clear;
 }
-#content > h2:hover {
-  text-decoration: underline;  
-  color:#58CCFF;  
+#content_post > h2:hover {
+  text-decoration: underline;
+  color: #58ccff;
+}
+.container1 {
+  margin-top: 20px;
+}
+
+.small_Menu_post {
+  margin-left: 50px;
+}
+.small_Menu_post1 {
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-right: 20px;
+  font-size: 18px;
+  margin-top: 15px;
+  padding: 5px 5px;
+  cursor: pointer;
+  background-color: lightgray;
+}
+/**********게시판(참여자입장)**********/
+* {
+  margin: 0;
+  padding: 0;
+  /*box-sizing: border-box;             로고 자꾸 없어짐..*/
+}
+#container_postUser {
+  margin: 30px auto;
+  text-align: center;
+  width: 80%;
+}
+#content_postUser {
+  clear: both;
+  margin: 0 auto;
+  width: 80%;
+}
+
+/********** 채팅 **********/
+#container_chat {
+  margin: 0 auto;
+  width: 80%;
+}
+#content_chat {
+  width: 100%;
+  height: 120px;
+  background-color: white;
+}
+#content_chat > img {
+  width: 100px;
+  height: 100px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+  float: left;
+}
+#content_chat > h2 {
+  margin-top: 5px;
+  float: clear;
+}
+#content_chat > h2:hover {
+  text-decoration: underline;
+  color: #58ccff;
+}
+
+.container2 {
+  margin-top: 20px;
+}
+.small_Menu_chat {
+  margin-left: 50px;
+}
+.small_Menu_chat1 {
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-right: 20px;
+  font-size: 18px;
+  margin-top: 15px;
+  padding: 5px 5px;
+  cursor: pointer;
+  background-color: lightgray;
+}
+
+/********** 채팅방 **********/
+.chatwrap {
+  margin: 30px auto;
+  width: 80%; /* 폭 80으로 설정 후 margin auto  설정*/
+}
+.chatwrap i {
+  font-size: 70px;
+  float: left;
+  margin-right: 10px;
+}
+.chatName h1 {
+  margin: 0px;
+}
+
+.wrap {
+  padding: 40px 0;
+}
+.wrap .chat_ch1,
+.chat_ch2 {
+  display: flex;
+  align-items: flex-start;
+  padding: 20px;
+}
+/* display가 inline-block이면은 textbox 크기 자동 설정됩니다 까먹지 말아요~~*/
+.wrap .chat_ch1 .textbox,
+.wrap .chat_ch2 .textbox {
+  position: relative;
+  display: inline-block;
+  padding: 10px;
+  margin-top: 7px;
+  font-size: 17px;
+  border-radius: 10px;
+}
+/* 가상 클래스 이용해서 말 풍선 꼬리 생성 기초작업 */
+.wrap .chat_ch1 .textbox::before,
+.wrap .chat_ch2 .textbox::before {
+  position: absolute;
+  display: block;
+  top: 0;
+  font-size: 1.5rem;
+}
+/* 왼쪽 말풍선 설정*/
+.wrap .chat_ch1 .textbox {
+  margin-left: 20px;
+  background-color: #ddd;
+}
+/*왼쪽 말풍선 꼬리 생성*/
+.wrap .chat_ch1 .textbox::before {
+  left: -18px;
+  content: "◀";
+  color: #ddd;
+}
+
+/*오른쪽 말풍선 방향 전환*/
+.wrap .chat_ch2 {
+  flex-direction: row-reverse;
+}
+/* 네온 연두색으로 깔맞춤*/
+.wrap .chat_ch2 .textbox {
+  margin-right: 20px;
+  background-color: #40f608;
+  color: white;
+}
+
+.wrap .chat_ch2 .textbox::before {
+  right: -15px;
+  content: "▶";
+  color: #40f608;
+}
+.chat_send_input {
+  border-radius: 5px;
+  border: none;
+  width: 96%;
+  display: inline-block;
+  margin: 5px 10px;
+}
+.chat_send2 {
+  display: inline-block;
+  width: 90%;
+  margin: 0px;
+}
+
+/******이벤트**************/
+#container3 {
+  margin: 0 auto;
+  width: 80%;
+}
+#content_event {
+  width: 100%;
+  height: 120px;
+  background-color: white;
+}
+#content_event > img {
+  width: 100px;
+  height: 100px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+  float: left;
+}
+#content_event > h2 {
+  margin-top: 5px;
+  float: clear;
+}
+#content_event > h2:hover {
+  text-decoration: underline;
+  color: #58ccff;
 }
 #button {
   background-color: crimson;
@@ -153,7 +337,351 @@ input{
   border-radius: 5px;
   float: right;
 }
-.container1{
-  margin-top: 70px;
+.container3 {
+  width: 80%;
+  margin: 20px auto;
+}
+.small_Menu_event {
+  margin-left: 50px;
+}
+.small_Menu_event1 {
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-right: 20px;
+  font-size: 18px;
+  margin-top: 15px;
+  padding: 5px 5px;
+  cursor: pointer;
+  background-color: lightgray;
+}
+/************************이벤트 상세페이지 ******************/
+#container_event_detail {
+  margin: 0 auto;
+  text-align: center;
+  width: 80%;
+  margin-top: 30px;
+}
+/************************마이 페이지 ******************/
+#container_mypage {
+  margin: 0 auto;
+  text-align: center;
+  width: 80%;
+}
+#content_mypage {
+  clear: both;
+  margin: 0 auto;
+  width: 80%;
+}
+/************************찜 ******************/
+#container_wishlist {
+  margin: 20px auto;
+  width: 80%;
+}
+#content_wishlist {
+  width: 100%;
+  height: 120px;
+  background-color: white;
+}
+#content_wishlist > img {
+  width: 100px;
+  height: 100px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+  float: left;
+}
+#content_wishlist > h2 {
+  margin-top: 5px;
+  float: clear;
+}
+#content_wishlist > h2:hover {
+  text-decoration: underline;
+  color: #58ccff;
+}
+#content_wishlist button {
+  background-color: crimson;
+  border: none;
+  color: white;
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  float: right;
+}
 
+/******************거래내역*****************/
+#container_history {
+  margin: 50px auto;
+  width: 80%;
+}
+#content_history {
+  width: 100%;
+  height: 120px;
+  background-color: white;
+}
+#content_history > img {
+  width: 100px;
+  height: 100px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+  float: left;
+}
+#content_history > h2 {
+  margin-top: 5px;
+  float: clear;
+}
+#content_history > h2:hover {
+  text-decoration: underline;
+  color: #58ccff;
+}
+
+/******************로그인1****************/
+.login1_logo {
+  display: block;
+  margin: auto;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+.login_button {
+  cursor: pointer;
+}
+
+.loginbox {
+  width: 780px;
+  height: 550px;
+  margin: 0 auto;
+}
+.loginbox h2 {
+  width: 100%;
+
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: normal;
+}
+.loginbox form {
+  width: 100%;
+  height: 450px;
+  background-color: #fff;
+  padding: 60px;
+  box-sizing: border-box;
+}
+.loginbox fieldset {
+  border: none;
+}
+.loginbox legend {
+  position: absolute;
+  left: -999em;
+}
+.loginbox label {
+  display: block;
+  font-size: 12px;
+  color: #333;
+  margin-bottom: 10px;
+}
+.loginbox input {
+  display: block;
+  width: 100%;
+  height: 50px;
+  margin-bottom: 25px;
+  border: none;
+  background-color: #ededed;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.loginbox a {
+  color: #333;
+  font-size: 12px;
+  position: relative;
+  top: -2px;
+}
+.loginbox button {
+  display: block;
+  width: 220px;
+  height: 50px;
+  margin: 0 auto; /* 블록요소가 부모 영역에서 가운데 오기 */
+  border: none;
+  background-color: #1673ea;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/*******************로그인2****************************/
+.login2_logo {
+  display: block;
+  margin: auto;
+}
+
+.logwrap button {
+  cursor: pointer;
+}
+
+.logwrap a {
+  text-decoration: none;
+  color: black;
+}
+
+/*******************로그인3****************************/
+#container_login3 {
+  text-align: left;
+  width: 80%;
+  margin: 0 auto;
+}
+#content_login3 {
+  clear: both;
+  width: 80%;
+}
+
+#container_login3 input {
+  width: 300px;
+  height: 30px;
+}
+
+#container_login3 input:focus {
+  outline-color: #58ccff;
+}
+
+#container_login3 textarea:focus {
+  outline-color: #58ccff;
+}
+
+#container_login3 a {
+  text-decoration: none;
+  color: black;
+}
+
+/*******************로그인4****************************/
+.loginbox_4 img {
+  display: block;
+  margin: auto;
+}
+
+button {
+  cursor: pointer;
+}
+
+.loginbox_4 {
+  width: 780px;
+  height: 550px;
+  margin: 0 auto;
+}
+.loginbox_4 form {
+  width: 100%;
+  height: 450px;
+  background-color: white;
+  padding: 60px;
+  box-sizing: border-box;
+}
+.loginbox_4 fieldset {
+  border: none;
+}
+.loginbox_4 span {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.loginbox_4 button {
+  display: block;
+  width: 200px;
+  height: 50px;
+  margin: 0 auto;
+  border: none;
+  background-color: #58ccff;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/****************로그인5****************************/
+.logo_5 {
+  display: block;
+  margin: auto;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+.loginbox_5 {
+  width: 780px;
+  height: 550px;
+  margin: 0 auto;
+}
+.loginbox_5 form {
+  width: 100%;
+  height: 450px;
+  background-color: white;
+  padding: 60px;
+  box-sizing: border-box;
+}
+.loginbox_5 fieldset {
+  border: none;
+}
+.loginbox_5 span {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.loginbox_5 button {
+  display: block;
+  width: 110px;
+  height: 50px;
+  margin: 0 auto;
+  border: none;
+  background-color: #58ccff;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/*************로그인6****************/
+.error_6 {
+  display: block;
+  margin: auto;
+}
+.loginbox_6 button {
+  cursor: pointer;
+}
+
+.loginbox_6 {
+  width: 780px;
+  height: 550px;
+  margin: 0 auto;
+}
+.loginbox_6 form {
+  width: 100%;
+  height: 450px;
+  background-color: white;
+  padding: 60px;
+  box-sizing: border-box;
+}
+.loginbox_6 fieldset {
+  border: none;
+}
+.loginbox_6 span {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.loginbox_6 button {
+  display: block;
+  width: 110px;
+  height: 50px;
+  margin: 0 auto;
+  border: none;
+  background-color: #58ccff;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
 }

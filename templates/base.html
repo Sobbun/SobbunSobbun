@@ -34,39 +34,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
   <body>
-    <a href="/">   
-      <img src="{% static 'img/logo.png' %}" alt="My image" class="imag">    
-    </a>   
-    <nav>
-      <ul>
-        <li class="topnav">
-          <a href="{% url 'app:list' %}"><div class="topnav_menu">게시판</div></a>
-          <div class="dropdown_content">
-            <a href="#">음식</a>
-            <a href="#">생활용품</a>
-            <a href="#">뷰티/미용</a>
-            <a href="#">건강/운동</a>
-          </div>
-        </li>
-        <li class="topnav">
-          <a href="{% url 'chat:index' %}"><div class="topnav_menu">채팅</div></a>
-          <div class="dropdown_content"></div>
-        </li>
-        <li class="topnav">
-          <a href="{% url 'event:index' %}"><div class="topnav_menu">이벤트</div></a>
-          <div class="dropdown_content"></div>
-        </li>
-        <li class="topnav">
-          <a href="#"><div class="topnav_menu">마이페이지</div></a>
-        </li>
-        <li class="login">
-          <a href="{% url 'common:login' %}"><div class="login_menu">로그인</div></a>
-        </li>
-        <li class="login">
-          <a href="{% url 'common:signup' %}"><div class="login_menu">회원가입</div></a>
-        </li>
-      </ul>
-    </nav>
+    {% include 'nav.html' %}
     
     {% block content %} {% endblock %}
   </body>

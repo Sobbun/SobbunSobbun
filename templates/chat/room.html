@@ -3,59 +3,46 @@
 {% block content%} 
 {% if room %}
 <div class="chatwrap">
-  <div class="chatProfile" style="height: 90px">
-    <div class="profile_icon" sy><i class="fa-regular fa-circle-user"></i></div>
-    <div class="chatName" style="float: left">
-      <h1 style="margin-top: 0px">닉네임</h1>
-      <p style="font-size: 15px; margin-top: 10px">위치 정보</p>
-    </div>
-
-    <div class="trust" style="float: right">
-      <h3 style="font-size: 15px; margin-top: 20px; margin-bottom: 3px">
-        신뢰도 20%
-      </h3>
-      <progress
-        max="100"
-        value="20"
-        style="width: 80px; height: 20px"
-      ></progress>
-    </div>
+  {% if room.topic_type == 2 %}
+  <div class="chatProfile" style="height: 90px;">
+    {% if room.topic.profile.picture %}
+      <div class="profile_icon"><img src="{{ room.topic.profile.picture.url }}"></div>
+    {% else %} 
+      <div class="profile_icon"><i class="fa-regular fa-circle-user"></i></div>
+    {% endif %}
+        <div class="chatName" style="float: left;">
+            <h1 style="margin-top: 0px;">{{ room.topic.profile.nickname }}</h1>
+            <p style="font-size: 15px; margin-top: 10px;">{{ room.topic.profile.bio }}</p></div>
+        
+        <div class="trust" style="float:right;">
+            <h3 style="font-size: 15px; margin-top:20px; margin-bottom:3px;"> 신뢰도 {{ room.topic.trust_level.level|floatformat:"0" }}% </h3>
+            <progress max="100" value="{{ room.topic.trust_level.level|floatformat:"0" }}" style="width: 80px; height: 20px;"></progress>
+        </div>
+              
   </div>
+  {% endif %}
   <hr style="border: solid 1px gray; margin-top: 0px" />
 
   <div class="wrap">
     {% for message in room.messages.all %}
-      <div class="{% if message.author == request.user %}chat_ch1{% else %}chat_ch2{% endif %}1">
+      <div class="chat_ch{% if message.author == request.user %}1{% else %}2{% endif %}">
         <div class="textbox">{{ message.content }}</div>
       </div>
     {% endfor %}
   </div>
   <form method="post" action="{% url 'chat:send_message' room.id %}">
     {% csrf_token %}
-    <div class="chat_write" style="height: 30px; background-color: lightgray">
+    <div class="chat_write" style="height:30px; background-color:lightgray">
       <div class="chat_send">
-        <i
-          class="fa-solid fa-plus"
-          style="font-size: 20px; margin: 5px 10px; float: left"
-        ></i>
+          <i class="fa-solid fa-plus" style="font-size: 20px; margin:5px 10px; float:left;"></i>
       </div>
-      <div class="chat_send2" style="display: inline-block">
-        <input
-          name="content" 
-          id="id_content"
-          type="text"
-          placeholder="텍스트를 입력하세요."
-          class="chat_send_input"
-          style="float: left"
-        />
+      <div class="chat_send2" style="display: inline-block;">
+          <input name="content" id="id_content" type="text" placeholder="텍스트를 입력하세요." class="chat_send_input" style="float: left;">
       </div>
-      <div class="chat_send3" style="display: inline-block" onclick="this.parentNode.parentNode.submit()">
-        <i
-          class="fa-regular fa-paper-plane"
-          style="font-size: 15px; float: left; margin-bottom: 5px"
-        ></i>
+      <div class="chat_send3" style="display:inline-block;" onclick="this.parentNode.parentNode.submit()">
+          <i class="fa-regular fa-paper-plane" style="font-size: 15px; float:left; margin-bottom:5px"></i>
       </div>
-    </div>
+    <div>
   </form>
 </div>
 {%endif%}
@@ -63,10 +50,13 @@
 {% if debug %}
   {% for message in room.messages.all %}  
   <li>
-    A message #{{ message.id }} by . edited:
+    A message #{{ message.id }} by {{ message.author }}. edited:
     {{message.edited}} / checked status: {{ message.checked_status }}:
     <br />"""{{ message.content }}"""<br />
-    <form method="post" action="{% url 'chat:edit_message' room.id %}">
+    {% if message.versions %}
+    <br/>{% for v in message.versions.all %}<span>""{{v.content}}"" at {{v.created_at}}</span>{% endfor %}<br />
+    {% endif %}
+    <form method="post" action="{% url 'chat:edit_message' message.id %}">
       {% csrf_token %}
       <input type="text" name="content" id="id_content" />
       <br />

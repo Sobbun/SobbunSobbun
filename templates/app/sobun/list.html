@@ -2,11 +2,25 @@
 {% load static %}
 {% block title%}소분 리스트{% endblock %}
 {% block content %}
+  <div class="small_Menu_post" style="width: 600px;height: 50px;display: inline-block;">
+    <div class="small_Menu_post1"style="float:left;">음식</div>
+    <div class="small_Menu_post1"style="float:left;">생활용품</div>
+    <div class="small_Menu_post1"style="float:left;">뷰티/미용</div>
+    <div class="small_Menu_post1"style="float:left;">건강/운동</div>
+  </div>
+  <div class="write">
+    <button class="w">글쓰기</button>
+  </div>      
+  <div class="search">
+    <input type="text" placeholder="검색어 입력">
+    <button class="s">검색</button>
+  </div>
+
   {% if posts %}
   <div class="container1">
     {% for post in posts %}
-      <div id="container">
-        <div id="content">
+      <div id="container_post">
+        <div id="content_post">
           <hr>
           {% if post.picture %}
             <img src="{{ post.picture.url }}" alt="">
@@ -20,6 +34,7 @@
         </div>
       </div>
     {% endfor %}
+  </div>
   {% else %}
   <p>소분 게시글이 없습니다.</p>
   {% endif %}
