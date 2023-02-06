@@ -4,7 +4,7 @@ from .models import Event, EventCategory, EventTag
 # Register your models here.
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    fields = ('title', 'user', 'description', 'picture', 'status', 'category',  'tags', 'is_deleted')
+    fields = ('title', 'user', 'description', 'picture', 'status', 'category', 'start_date', 'end_date', 'tags', 'is_deleted')
 
 @admin.register(EventCategory)
 class EventCategoryAdmin(admin.ModelAdmin):
