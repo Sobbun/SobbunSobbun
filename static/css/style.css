@@ -1,7 +1,159 @@
-textarea {
-    width: 100%;
+a{
+  text-decoration: none;
+  color: black;
 }
 
-input[type=submit] {
-    margin-top: 10px;
+nav ul {
+  width: 100%;
+  background-color: lightgray;
+  list-style-type: none;
+  margin: 0;
+  padding-left: 20%;
+}
+
+nav ul li{
+  display: inline-block;
+}
+
+.topnav{
+  position: relative;
+  margin-left: 50px;
+}
+
+/* 게시판,채팅 등 네비게이션바 항목들*/
+.topnav_menu{               
+  padding:16px 50px;
+  font-size: 16px;
+  cursor: pointer;
+}
+/* 드롭다운으로 들어갈 메뉴들 처리, display none으로 일단 숨겨줌*/
+.dropdown_content{
+  position: absolute;
+  min-width: 500px;
+  
+}
+/* 드롭다운 메뉴들 세부 설정*/
+.dropdown_content a{
+  color: black;
+  text-decoration: none;
+  display: block;
+  padding: 7px 10px;
+  text-align: center;
+  border-radius: 30%;
+  margin-right: 15px;
+  margin-top: 10px;
+  background-color:#DCDCDC	;
+}
+/* 상단 메뉴 마우스 올릴 시 색 변환*/
+.topnav_menu:hover{              
+  background-color: gray;
+}
+/* 드롭다운 항목에 hover 적용 */
+.dropdown_content a:hover{
+  background-color: gray;
+}
+
+.dropdown_content a{
+  float:left;
+}
+/*이미지 크기 및 위치 조정*/
+.imag{
+  width: 45px;
+  float: left;
+  margin: 2px 30px;
+  position: fixed;
+}
+/* 로그인/회원가입 */
+.login{
+  font-size: small; 
+  cursor: pointer;
+}
+.login_menu{
+  padding: 10px;
+}
+.login:hover{
+  background-color: gray;
+}
+
+/*검색*/
+div.search{
+  height:40px;
+  width: 400px;
+  border: 1px solid black;
+  margin-top:10px;
+  padding: 0;
+  float: right;
+}
+input{
+  font-size: 15px;
+  width: 325px ;
+  padding: 10px;
+  border: 0px;
+  float:left;
+}
+.s{
+  width: 50px;
+  height: 100%;
+  float: right;
+}
+
+
+/*글쓰기*/
+.write{
+  width:80px;
+  height:42px;
+  margin-top: 10px;
+  float: right;
+  margin-right: 10px;
+}
+.w{
+  width: 100%;
+  height: 100%;
+  margin-left: 10px;
+}
+
+/* --------------------------------  */
+
+* {
+  margin: 0;
+  padding: 0;
+  /*box-sizing: border-box;*/       /*로고 없어짐*/
+}
+#container {
+  margin: 0 auto;
+  width: 80%;
+}
+#content {
+  width: 100%;
+  height: 120px;
+  background-color: white;  
+}
+#content > img {
+  width: 100px;
+  height: 100px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+  float: left;
+}
+#content > h2 {
+  margin-top: 5px;
+  float: clear
+}
+#content > h2:hover {
+  text-decoration: underline;  
+  color:#58CCFF;  
+}
+#button {
+  background-color: crimson;
+  border: none;
+  color: white;
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  float: right;
+}
+.container1{
+  margin-top: 70px;
+
 }

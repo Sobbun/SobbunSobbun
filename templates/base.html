@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>{% block title %}로딩중{% endblock %} - 소뿐소뿐</title>
 
     <meta
@@ -29,9 +29,42 @@
 
     <!-- JS -->
     <script defer src="{% static 'js/script.js' %}"></script>
-</head>
-<body>
-  {% block content %}
-  {% endblock %}
-</body>
+  </head>
+  <body>
+    <a href="/">   
+      <img src="{% static 'img/logo.png' %}" alt="My image" class="imag">    
+    </a>   
+    <nav>
+      <ul>
+        <li class="topnav">
+          <a href="{% url 'app:list' %}"><div class="topnav_menu">게시판</div></a>
+          <div class="dropdown_content">
+            <a href="#">음식</a>
+            <a href="#">생활용품</a>
+            <a href="#">뷰티/미용</a>
+            <a href="#">건강/운동</a>
+          </div>
+        </li>
+        <li class="topnav">
+          <a href="{% url 'chat:index' %}"><div class="topnav_menu">채팅</div></a>
+          <div class="dropdown_content"></div>
+        </li>
+        <li class="topnav">
+          <a href="{% url 'common:event_index' %}"><div class="topnav_menu">이벤트</div></a>
+          <div class="dropdown_content"></div>
+        </li>
+        <li class="topnav">
+          <a href="#"><div class="topnav_menu">마이페이지</div></a>
+        </li>
+        <li class="login">
+          <a href="{% url 'common:login' %}"><div class="login_menu">로그인</div></a>
+        </li>
+        <li class="login">
+          <a href="{% url 'common:signup' %}"><div class="login_menu">회원가입</div></a>
+        </li>
+      </ul>
+    </nav>
+    
+    {% block content %} {% endblock %}
+  </body>
 </html>
