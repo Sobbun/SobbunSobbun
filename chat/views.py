@@ -1,8 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseNotAllowed, HttpResponseForbidden
-from django.db.models import F
-from .models import ChatRoom, ChatMessage
+from django.http import HttpResponseNotAllowed, HttpResponseForbidden, HttpResponseNotModified
+from .models import ChatRoom, ChatMessage, ChatMessageHistory
 from .forms import SendMessageForm
 
 # Create your views here.
@@ -60,3 +59,36 @@ def send_message(request, room_id):
     message.save()
 
     return redirect('chat:room', room_id=room.id)
+
+@login_required
+def edit_message(request, message_id):
+    print(request.method)
+    user = request.user
+    message = get_object_or_404(ChatMessage, pk=message_id)
+
+    if request.method != 'POST':
+        return HttpResponseNotAllowed("Method Not Allowed")
+
+    if message.author != user:
+        return HttpResponseForbidden("Forbidden")
+    
+    form = SendMessageForm(request.POST)
+    if not form.is_valid():
+        return HttpResponseNotAllowed("Not allowed")
+
+    new = form.cleaned_data["content"]
+    old = message.content 
+
+    if new == old:
+        return HttpResponseNotModified()
+
+    ChatMessageHistory.objects.create(
+        message = message,
+        content = old
+    )
+
+    message.content = form.cleaned_data["content"]
+    message.save()
+
+    return redirect('chat:room', room_id=message.room.id)
+
