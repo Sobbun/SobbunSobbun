@@ -31,7 +31,7 @@ class Profile(models.Model):
 class Area(models.Model):
     code = models.IntegerField()
     name = models.TextField()
-    center = models.TextField()
+    center = models.TextField(blank=True)
     version = models.DateField()
 
     def __str__(self):
