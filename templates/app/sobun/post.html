@@ -52,13 +52,13 @@
     </div>
   {% endif%}
 </div>
-  {% if debug and post %}
+  {% if debug %}
     <p>Title : {{ post.title }}</p>
-    <p>Description : </p>
+    <p>Description : {{ post.description }}</p>
     <p>User : {{ post.user }}</p>
     <p>Category : {{ post.category }}</p>
     <p>Schedule : {{ post.schedule }}</p>
-    <p>Product : </p>
+    <p>Product : {{ post.product }}</p>
     <p>Place : {{ post.place }}</p>
     <p>Is deleted : {{ post.is_deleted }}</p>
     <p>Created at : {{ post.created_at }}</p>
@@ -68,8 +68,6 @@
         <li>tag: {{ tag }}</li>
     {% endfor %}
     </ul>
-  {% else %}
-  <p>소분 게시글이 없습니다.</p>
   {% endif %}
   {% if post.picture %}
     <img src="{{ post.picture.url }}" alt="{{ post.picture }}" />
