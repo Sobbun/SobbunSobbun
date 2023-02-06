@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import common.views as commonViews
 from .models import SobunPost
 from .forms import SobunPostForm
@@ -39,6 +39,7 @@ def sobun_create(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
+            post.is_deleted = False
             post.save()
             return redirect('app:index')
     else:
