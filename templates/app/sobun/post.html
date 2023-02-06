@@ -1,13 +1,64 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title%}소분 리스트{% endblock %}
 {% block content %}
+<div id="container">
   {% if post %}
+    <img src="{% if post.picture %}{{ post.picture.url }}{% else %}{% static 'img/logo.png' %}{% endif %}" alt="" style= "width: 300px; height: 300px;">
+    <br>
+    <br>
+    <hr>
+    <br>
+    <div id="title"></div>
+      <div id="profileimg" style="background: lightgray; border-radius: 70%; width: 100px; 
+               height: 100px; overflow: hidden; margin-left: 50px; float: left;">
+        <img src="./sobun2.png" style="width: 100%; height: 100%; object-fit: cover;">
+       </div>
+        <div id="profile" style="float: left; text-align: left; margin-left: 10px;">
+        <h2 style="font-size: 30px;"> {{ post.user.profile.nickname|default_if_none:post.user.id }} </h2>
+        <br>
+        <p style="font-size: 15px; margin-top: 10px;"> {{ post.area|default_if_none:'전국' }} </p>
+       </div>      
+       <div id="deal" style="float: right;">
+         <button style="background-color: #58CCFF; float: right; border: none;
+                        color: black; width: 100px; height: 40px; border-radius: 5px;
+                        font-size: 15px; font-weight: bold;"> 거래 요청 </button>
+       </div>
+       <div id="trust" style="float: right; margin-right: 10px;">
+         <h3 style="font-size: 15px;"> 신뢰도 {{ post.user.trust_level.level }}% </h3>
+         <progress max="100" value="50" style="width: 80px; height: 20px;"></progress>
+       </div>
+    </div>
+
+    <div id="content">
+     <br>
+     <hr>
+      <div id="sub" style="margin-left: 50px; margin-top: 10px; float: left;">
+       <h1 style="font-size: 30px;"> {{ post.title}} </h1>
+       <h3 style="font-size: 15px;"> {{ post.sobun_price }} - {{ post.sobun_unit }}</h3>
+      </div>
+      <div id="sub2" style="float: right; text-align: right; margin-top: 10px;">
+       <p> {{ post.category}} </p>
+       <p> {{ post.created_at }} </p>
+       <h5> {{ post.product }} </h5>  
+      </div>
+     </div>
+
+    <div id="content">
+     <br>
+     <div id="explain" style="width: 80%; margin-left: 50px;">
+      {{ post.description }}
+     </div>
+    </div>
+  {% endif%}
+</div>
+  {% if debug and post %}
     <p>Title : {{ post.title }}</p>
-    <p>Description : {{ post.description }}</p>
+    <p>Description : </p>
     <p>User : {{ post.user }}</p>
     <p>Category : {{ post.category }}</p>
     <p>Schedule : {{ post.schedule }}</p>
-    <p>Product : {{ post.product }}</p>
+    <p>Product : </p>
     <p>Place : {{ post.place }}</p>
     <p>Is deleted : {{ post.is_deleted }}</p>
     <p>Created at : {{ post.created_at }}</p>
