@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title%}쳇 리스트{% endblock %}
+{% block content %}
+  {% if rooms %}
+    <ul>
+      {% for room in rooms %}
+        <li><a href="{% url 'chat:room' room.id %}">{{ room.id }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+  <p>소분 게시글이 없습니다.</p>
+  {% endif %}
+{% endblock %}

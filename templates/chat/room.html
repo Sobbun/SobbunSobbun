@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title%}채팅방{% endblock %}
+{% block content %}
+  {% if room %}
+    <ul>
+      {% for message in room.messages.all %}
+        <li>A message #{{ message.id }} by {{ message.author }}. edited: {{message.edited}} / checked status: {{ message.checked_status }}: <br/>"""{{ message.content }}"""<br>
+            <form method="post" action="{% url 'chat:edit_message' room.id %}">
+                {% csrf_token %}
+                <input type="text" name="content" id="id_content">
+                <br>
+                <input type="submit">
+            </form></li>
+      {% endfor %}
+    </ul>
+    <form method="post" action="{% url 'chat:send_message' room.id %}">
+        {% csrf_token %}
+        <input type="text" name="content" id="id_content">
+        <br>
+        <input type="submit">
+    </form>
+  {% else %}
+  <p>채팅방이 없습니다.</p>
+  {% endif %}
+{% endblock %}
