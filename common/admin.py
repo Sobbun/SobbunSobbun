@@ -24,7 +24,7 @@ class CustomUserAdmin(UserAdmin):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    fields = ('user', 'nickname', 'content', 'picture', 'updated_at')
+    fields = ('user', 'bio',)
 
 
 @admin.register(Area)
@@ -33,12 +33,12 @@ class AreaAdmin(admin.ModelAdmin):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    fields = ('id', 'name', 'area', 'status', 'updated_at', 'created_at')
+    fields = ('name', 'area', 'description', 'status',  )
 
 @admin.register(LocationVerification)
 class LocationVerificationAdmin(admin.ModelAdmin):
-    fields = ('user', 'area', 'updated_at', 'created_at')
+    fields = ('user', 'area',)
 
 @admin.register(TrustLevel)
 class TrustLevelAdmin(admin.ModelAdmin):
-    fields = ('user', 'level' 'updated_at', 'created_at')
+    fields = ('user', 'level',)

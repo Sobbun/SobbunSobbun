@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from phonenumber_field.modelfields import PhoneNumberField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -17,13 +19,13 @@ class User(AbstractUser):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nickname = models.CharField(max_length=15, blank=True)
-    content = models.TextField()
-    picture = models.ImageField(upload_to='pictures/profile')
+    bio = models.TextField(max_length=500, blank=True)
+    picture = models.ImageField(upload_to='pictures/profile', blank=True)
 
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user
+        return self.user.__str__()
 
 
 class Area(models.Model):
@@ -67,14 +69,14 @@ class LocationVerification(models.Model):
 
 
 class TrustLevel(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='trust_level')
     level = models.FloatField(default=50, validators=[MinValueValidator(0.0), MaxValueValidator(100.0)])
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user
+        return f"{self.user}"
 
 
 class AbstractCategory(models.Model):
@@ -124,3 +126,12 @@ class AbstractPost(models.Model):
 
     class Meta:
         abstract = True
+
+# 생성시 기본 인스턴스
+@receiver(post_save, sender=User)
+def update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+        TrustLevel.objects.create(user=instance)
+    instance.profile.save()
+    instance.trust_level.save()

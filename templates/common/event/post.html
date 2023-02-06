@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title%}이벤트 리스트{% endblock %}
+{% block content %}
+  {% if post %}
+    <p>Name : {{ post.name }}</p>
+    <p>Description : {{ post.description }}</p>
+    <p>Status : {{ post.status }}</p>
+    <p>Area : {{ post.area }}</p>
+    <p>Created at : {{ post.created_at }}</p>
+    <p>Updated at : {{ post.updated_at }}</p>
+    <ul>
+    </ul>
+  {% else %}
+  <p>이벤트 게시글이 없습니다.</p>
+  {% endif %}
+{% endblock %}

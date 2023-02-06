@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title%}이벤트 리스트{% endblock %}
+{% block content %}
+  {% if posts %}
+    <ul>
+      {% for post in posts %}
+        <li><a href="{% url 'common:event_post' post.id %}">{{ post.name }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+  <p>이벤트가 없습니다.</p>
+  {% endif %}
+{% endblock %}
