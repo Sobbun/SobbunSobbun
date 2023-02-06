@@ -16,6 +16,8 @@ class Event(AbstractPost):
     area = models.ForeignKey(Area, null=True, on_delete=models.SET_NULL)
 
     status = models.CharField(max_length=20, blank=True)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
 
     category = models.ForeignKey(
         EventCategory, on_delete=models.SET_NULL, null=True)
