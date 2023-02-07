@@ -2,11 +2,16 @@
 {% load static%}
 {% block title%}이벤트 리스트{% endblock %}
 {% block content %}
+<div class="small_Menu_event" style="width: 600px;height: 50px;display: inline-block;">
+  <div class="small_Menu_event1"style="float:left;">진행중</div>
+  <div class="small_Menu_event1"style="float:left;">진행예정</div>
+  <div class="small_Menu_event1"style="float:left;">진행종료</div>
+</div>
 {% if posts %}
-  <div class="container1">
+  <div class="container3">
     {% for post in posts %}
-      <div id = "container">
-        <div id="content">
+      <div id = "container_event">
+        <div id="content_event">
           <hr>
           {% if post.picture %}
             <img src="{{ post.picture.url }}" alt="">
