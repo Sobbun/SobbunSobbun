@@ -2,20 +2,21 @@
 {% extends 'base.html' %}
 {% block title %}가입{% endblock %}
 {% block content%}
-    <form method="post">
+  {% include "form_errors.html" %}
+  <form method="post">
     {% csrf_token %}
-    {% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-          <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-      </p>
-    {% endfor %}
-    <button type="submit">Sign up</button>
+    <div class="logWrap">
+      <label><b>회원 ID</b></label><br>
+      <input type="text" name="username" id="id_username" required placeholder="내용을 입력해주세요" value="{{ form.username.value|default_if_none:'' }}"><br>
+      <label><b>비밀번호</b></label><br>
+      <input type="password" name="password1" autocomplete="new-password" required id="id_password1" placeholder="내용을 입력해주세요" value="{{ form.password1.value|default_if_none:'' }}"><br>
+      {% comment %} <button type="submit">인증번호 받기</button><br> {% endcomment %}
+      <label><b>비밀번호 확인</b></label><br>
+      <input type="password" name="password2" autocomplete="new-password" required id="id_password2" placeholder="내용을 입력해주세요" value="{{ form.password2.value|default_if_none:'' }}"><br>
+      {% comment %} <button type="submit">중복확인</button><br> {% endcomment %}
+      <label><b>전화번호</b></label><br>
+      <input type="tel" name="phone" required id="id_phone" placeholder="내용을 입력해주세요"><br><br>
+      <button type="submit">다음</button>
+    </div>
   </form>
 {% endblock %}

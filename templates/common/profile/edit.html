@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}프로필 설정{% endblock %}
+{% block content %}
+<div id="container_login3">
+  <h3 style="text-align: left; margin-top: 20px; margin-bottom: 10px;"> 프로필 설정</h3>
+  <hr>
+
+  <div id="photo_login3" style="margin-top: 20px;">
+    <h4 style="float: left; margin-left: 20px; margin-top: 40px;"> 사진 </h4>
+    <div id="profileimg_login3" style="background: lightgray; border-radius: 70%; width: 100px; 
+    height: 100px; overflow: hidden; margin-left: 100px;">
+      <img src="logo.png" style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
+  </div>
+
+  <div style=" margin-top: 40px; margin-left: 15px;">
+    <h4 style="float: left;"><label for="username">닉네임</label></h4>
+    <input id="userid_login3" type="text" style="float: left; margin-left: 30px;" placeholder="기존 닉네임" onfocus="this.placeholder = ''" onblur="this.placeholder = '기존 닉네임'" />
+  </div>
+
+  <div id="content_login3" style=" margin-top: 100px; margin-left: 15px;">
+    <h4 style="float: left;"><label for="date">생년월일</label></h4>
+    <input id="date_login3" type="date" style="float: left; margin-left: 15px;">
+  </div>
+
+  <br>
+  <div id="content_login3" style=" margin-top: 40px; margin-left: 15px;">
+    <h4 style="float: left;"><label for="emalul">이메일</label></h4>
+    <input id="email_login3" type="email" style="float: left; margin-left: 30px;" placeholder="기존 이메일" onfocus="this.placeholder = ''" onblur="this.placeholder = '기존 이메일'" />
+  </div>
+
+  <br>
+  <div id="content_login3" style="margin-top: 40px; margin-left: 15px;">
+    <h4 style="float: left;"> 자기소개 </h4>
+    <textarea cols="40" rows="5" placeholder="자신을 소개해주세요!" style="margin-left: 12px;" onfocus="this.placeholder = ''" onblur="this.placeholder = '자신을 소개해주세요!'" /></textarea>
+  </div>
+
+  <br>
+  <div id="content_login3" style="float: right;">
+    <button style="background-color: #58CCFF; border: none; margin-left: 50px;
+                   color: black; width: 100px; height: 40px; border-radius: 5px;
+                   font-size: 15px; font-weight: bold; margin-top: -10px;"><a href="/"> 저장</a> </button>
+  </div>
+
+
+
+</div>
+{% endblock %}
+
