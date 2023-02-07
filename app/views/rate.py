@@ -13,6 +13,7 @@ class RateListView(LoginRequiredMixin, generic.ListView):
     model = SobunRate
     ordering = '-created_at'
     context_object_name = 'rates'
+    paginate_by = 10
     template_name = 'app/rate/list.html'
 
     def get_queryset(self):
@@ -24,6 +25,7 @@ class RateUserListView(LoginRequiredMixin, generic.ListView):
     model = SobunRate
     ordering = '-created_at'
     context_object_name = 'rates'
+    paginate_by = 10
     template_name = 'app/rate/list.html'
 
     def get_queryset(self):

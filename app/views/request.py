@@ -12,6 +12,7 @@ class RequestListView(LoginRequiredMixin, generic.ListView):
     model = Sobun
     ordering = '-updated_at'
     context_object_name = 'requests'
+    paginate_by = 10
     template_name = 'app/request/list.html'
 
     def get_queryset(self):
@@ -25,6 +26,7 @@ class PostRequestListView(LoginRequiredMixin, generic.ListView):
     model = Sobun
     ordering = '-updated_at'
     context_object_name = 'requests'
+    paginate_by = 10
     template_name = 'app/request/list.html'
 
     def get_queryset(self):
