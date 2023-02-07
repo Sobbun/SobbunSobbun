@@ -18,8 +18,8 @@ def signup(request):
             
             user.refresh_from_db()
 
-
-            return redirect('common:profile_edit')
+            # FIXME: Profile
+            return redirect("app:index") # redirect('common:profile_edit')
     else:
         form = SignupForm()
     return render(request, 'common/signup.html', { 'form': form })

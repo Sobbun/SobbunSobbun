@@ -1,28 +1,31 @@
-from django.shortcuts import get_object_or_404, render
-from django.core.paginator import Paginator
-from django.http import HttpResponseNotFound
+from django.shortcuts import get_object_or_404
+from django.http import Http404
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
+from django.views import generic
+from django.urls import reverse_lazy
+
 from .models import Event
+class EventListView(generic.ListView):
+    model = Event
+    ordering = '-updated_at'
+    context_object_name = 'posts'
+    paginate_by = 10
+    template_name = 'event/list.html'
 
-# Create your views here.
-def event_list(request):
-    event_post_list = Event.objects.filter(is_deleted=False).order_by('-updated_at')
-
-    page = request.GET.get('page', 1)
-    paginator = Paginator(event_post_list, 10)
-    page_obj = paginator.get_page(page)
-
-    context = {
-        'posts': page_obj
-    }
-    return render(request, 'event/list.html', context)
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(is_deleted=False)
 
 
-def event_post(request, event_id):
-    post = get_object_or_404(Event, id=event_id)
-    if post.is_deleted and not request.user.is_superuser:
-        return HttpResponseNotFound("Not Found")
+class EventDetailView(generic.DetailView):
+    model = Event
+    context_object_name = 'post'
+    template_name = 'event/post.html'
 
-    context = {
-        'post': post
-    }
-    return render(request, 'event/post.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = get_object_or_404(Event, pk = self.kwargs['pk'])
+        if post.is_deleted and not self.request.user.is_superuser:
+            raise Http404
+        return context
