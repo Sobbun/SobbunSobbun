@@ -1,0 +1,20 @@
+
+{% extends 'base.html' %}
+{% block title %}요청{% endblock %}
+{% block content%}
+{% if debug %}
+  {% include 'form_errors.html' %}
+  <form method="post">
+    {% csrf_token %}
+    <label for="type">Type</label><br/>
+    <select id="type" name="type">
+      <option value="-1">Bad</option>
+      <option value="1">Good</option>
+    </select>
+    <input type="text" id="detail" name="detail" value="{{ form.detail.value|default_if_none:'' }}" />
+    <button type="submit">
+      Rate
+    </button>
+  </form>
+{% endif %}
+{% endblock %}

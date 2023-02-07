@@ -1,0 +1,83 @@
+from django.http import Http404
+from django.shortcuts import get_object_or_404
+from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import generic
+from django.urls import reverse
+
+from ..models import Sobun, SobunRate, SobunStatus
+from ..forms import SobunRateForm
+
+# 조회
+class RateListView(LoginRequiredMixin, generic.ListView):
+    model = SobunRate
+    ordering = '-created_at'
+    context_object_name = 'rates'
+    template_name = 'app/rate/list.html'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(Q(user_to__pk=self.kwargs["pk"]) | Q(user_from__pk=self.kwargs["pk"]))
+
+# request 유저 조회
+class RateUserListView(LoginRequiredMixin, generic.ListView):
+    model = SobunRate
+    ordering = '-created_at'
+    context_object_name = 'rates'
+    template_name = 'app/rate/list.html'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(Q(user_to=self.request.user) | Q(user_from=self.request.user))
+
+class RateCreateView(LoginRequiredMixin, generic.CreateView):
+    model = SobunRate
+    form_class = SobunRateForm
+    template_name = 'app/rate/create.html'
+    context_object_name = 'form'
+
+    def form_valid(self, form):
+        # 완료된 소분 내역이 없을시 + 요청 유저가 둘 중 하나가 아닐시
+        sobun_query = Sobun.objects.filter(
+            Q(user=self.request.user.id) | Q(post__user=self.request.user.id), 
+            pk=self.kwargs['sobun_id'], status=SobunStatus.COMPLETE)
+        if not sobun_query.exists():
+            raise Exception("BadRequest")
+
+        # 평가 내역이 있을시
+        rate_query = SobunRate.objects.filter(user_from=self.request.user, sobun__pk=self.kwargs['sobun_id'])
+        if rate_query.exists():
+            raise Exception("BadRequest")
+
+        sobun = Sobun.objects.get(pk=self.kwargs['sobun_id'])
+
+        post_user = sobun.post.user
+        sobun_user = sobun.user
+
+        # 두명이 같을시
+        if sobun_user == post_user:
+            raise Exception("BadRequest")
+
+
+        form.instance.user_from = self.request.user
+        form.instance.user_to = post_user if sobun_user == self.request.user else sobun_user
+        form.instance.sobun = sobun
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+       pk = self.object.id
+       return reverse("app:rate", kwargs={"pk": pk})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+class RateDetailView(LoginRequiredMixin, generic.DetailView):
+    model = SobunRate
+    context_object_name = 'rate'
+    template_name = 'app/rate/view.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context

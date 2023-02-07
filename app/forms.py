@@ -1,7 +1,7 @@
 from django import forms
 from django.urls import reverse_lazy
 
-from .models import SobunPost, Sobun
+from .models import SobunPost, Sobun, SobunRate
 
 
 class SobunPostForm(forms.ModelForm):
@@ -14,3 +14,8 @@ class SobunForm(forms.ModelForm):
     class Meta:
         model = Sobun
         fields = ('time', 'status',)
+
+class SobunRateForm(forms.ModelForm):
+    class Meta:
+        model = SobunRate
+        fields = ('type', 'detail',)

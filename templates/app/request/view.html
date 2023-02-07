@@ -10,5 +10,11 @@
     <p>Status : {{ request.status }}</p>
     <p>Created at : {{ request.created_at }}</p>
     <p>Updated at : {{ request.updated_at }}</p>
+
+    <a href="{% url 'app:request_edit' request.id %}"><button>Edit</button></a>
+    <br>
+    {% if request.status == 4 %}
+        <a href="{% url 'app:rate_create' request.id %}"><button>Rate</button></a>
+    {% endif %}
   {%endif%}
 {% endblock %}

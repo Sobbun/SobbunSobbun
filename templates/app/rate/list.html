@@ -1,0 +1,30 @@
+
+{% extends 'base.html' %}
+{% block title %}요청{% endblock %}
+{% block content%}
+{% if debug and rates %}
+  <ul>
+    {% for rate in rates %}
+      {% if rate.user_from == request.user %}
+        <li>
+          <a href="{% url 'app:request' rate.sobun.id %}">{{ rate.sobun }}</a>,
+          <a href="{% url 'app:rate' request.id %}">
+            Rate From {{ rate.user_to }} to You, 
+            {{ rate.type }} / {{ rate.detail }},
+            {{ rate.created_at }}
+          </a>
+        </li>
+      {% else %}
+        <li>
+          <a href="{% url 'app:request' rate.sobun.id %}">{{ rate.sobun }}</a>,
+          <a href="{% url 'app:rate' request.id %}">
+              Rate From {{ rate.user_to }} to You, 
+              {{ rate.type }} / {{ rate.detail }},
+              {{ rate.created_at }}
+            </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+{% endif %}
+{% endblock %}

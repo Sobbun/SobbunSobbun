@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title%}sobun{% endblock %}
+{% block content %}
+  {% if debug %}
+    <p>Sobun : <a href="{% url 'app:request' rate.sobun.id %}">{{ rate.sobun }}</a></p>
+    <p>User From : {{ rate.user_from }}</p>
+    <p>User To : {{ rate.user_to }}</p>
+    <p>Type : {{ rate.type }}</p>
+    <p>Detail : {{ rate.detail }}</p>
+    <p>Created at : {{ rate.created_at }}</p>
+
+    {% comment %} <a href="{% url 'app:request_edit' request.id %}"><button>Edit</button></a> {% endcomment %}
+  {%endif%}
+{% endblock %}

@@ -15,6 +15,10 @@ class SobunStatus(models.IntegerChoices):
     COMPLETE = 4
 
 
+class SobunRateType(models.IntegerChoices):
+    BAD = -1
+    GOOD = 1
+
 class GoodsCategory(AbstractCategory):
     pass
 
@@ -65,7 +69,7 @@ class SobunRate(models.Model):
     sobun = models.ForeignKey(
         Sobun, null=True, on_delete=models.SET_NULL)
 
-    type = models.IntegerField()
+    type = models.IntegerField(choices=SobunRateType.choices)
     detail = models.TextField(max_length=300)
 
     created_at = models.DateTimeField(auto_now_add=True)
