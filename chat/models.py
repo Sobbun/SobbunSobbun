@@ -71,7 +71,7 @@ class ChatRoom(models.Model):
                 pass
 
             self.topic_id = None
-            self.topic_text = None
+            self.topic_text = ""
 
         match instance:
             # Text
