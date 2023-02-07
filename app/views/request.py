@@ -1,6 +1,7 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.core.exceptions import BadRequest
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.urls import reverse
@@ -44,7 +45,7 @@ class RequestCreateView(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         if form.instance.status != 1:
-            raise Exception("BadRequest")
+            raise BadRequest
 
         post = get_object_or_404(SobunPost, pk = self.kwargs['post_id'])
         if post.is_deleted:
@@ -81,7 +82,7 @@ class RequestUpdateView(LoginRequiredMixin, generic.UpdateView):
     def form_valid(self, form):
         # 거절 이외에는 상태가 아래로 내려갈 수 없다.
         if form.instance.status != 0 and form.instance.status < self.object.status:
-            raise Exception("BadRequest")
+            raise BadRequest
         
         # 게시글 삭제시 미진행.
         if self.object.post.is_deleted:
@@ -100,7 +101,7 @@ class RequestUpdateView(LoginRequiredMixin, generic.UpdateView):
         context["available_option"] = list(filter(lambda x: x['id'] >= self.object.status, self.available_options))
 
         if self.object.status == 4:
-            raise Exception("BadRequest")
+            raise BadRequest
 
         return context
 

@@ -1,6 +1,5 @@
-from django.http import Http404
-from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.core.exceptions import BadRequest
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.urls import reverse
@@ -44,12 +43,12 @@ class RateCreateView(LoginRequiredMixin, generic.CreateView):
             Q(user=self.request.user.id) | Q(post__user=self.request.user.id), 
             pk=self.kwargs['sobun_id'], status=SobunStatus.COMPLETE)
         if not sobun_query.exists():
-            raise Exception("BadRequest")
+            raise BadRequest
 
         # 평가 내역이 있을시
         rate_query = SobunRate.objects.filter(user_from=self.request.user, sobun__pk=self.kwargs['sobun_id'])
         if rate_query.exists():
-            raise Exception("BadRequest")
+            raise BadRequest
 
         sobun = Sobun.objects.get(pk=self.kwargs['sobun_id'])
 
@@ -58,7 +57,7 @@ class RateCreateView(LoginRequiredMixin, generic.CreateView):
 
         # 두명이 같을시
         if sobun_user == post_user:
-            raise Exception("BadRequest")
+            raise BadRequest
 
 
         form.instance.user_from = self.request.user
