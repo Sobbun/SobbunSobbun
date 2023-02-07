@@ -20,9 +20,10 @@
         <p style="font-size: 15px; margin-top: 10px;"> {{ post.area|default_if_none:'전국' }} </p>
        </div>      
        <div id="deal" style="float: right;">
-         <button style="background-color: #58CCFF; float: right; border: none;
+          <a href="{% url 'app:request_create' post.id %}">
+          <button style="background-color: #58CCFF; float: right; border: none;
                         color: black; width: 100px; height: 40px; border-radius: 5px;
-                        font-size: 15px; font-weight: bold;"> 거래 요청 </button>
+                        font-size: 15px; font-weight: bold;"> 거래 요청 </button></a>
        </div>
        <div id="trust" style="float: right; margin-right: 10px;">
          <h3 style="font-size: 15px;"> 신뢰도 {{ post.user.trust_level.level|floatformat:"0" }}% </h3>

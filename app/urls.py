@@ -10,6 +10,7 @@ post_patterns = [
 ]
 
 request_patterns = [
+    path("", views.RequestListView.as_view(), name="index"),
     path("list", views.RequestListView.as_view(), name="request_list"),
     path("list/<int:post_id>", views.PostRequestListView.as_view(), name="request_post_list"),
     path("create/<int:post_id>", views.RequestCreateView.as_view(), name="request_create"),

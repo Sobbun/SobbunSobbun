@@ -7,15 +7,19 @@
     {% for request in requests %}
       {% if request.post.user == request.user %}
         <li>
-          <a href="{% url 'app:post' request.post.id %}">{{ request.post.title }}</a>,
-          From You to {{ request.post.user }}, 
-          {{ request.time }} / {{ request.status }}
+          <a href="{% url 'app:request' request.id %}">
+            {{ request.post.title }},
+            From You to {{ request.post.user }}, 
+            {{ request.time }} / {{ request.status }}
+          </a>
         </li>
       {% else %}
         <li>
-          <a href="{% url 'app:post' request.post.id %}">{{ request.post.title }}</a>,
-          From You to {{ request.user }}, 
-          {{ request.time }} / {{ request.status }}
+          <a href="{% url 'app:request' request.id %}">
+            {{ request.post.title }},
+            From You to {{ request.post.user }}, 
+            {{ request.time }} / {{ request.status }}
+          </a>
         </li>
       {% endif %}
     {% endfor %}
