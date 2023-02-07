@@ -7,6 +7,14 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
+class SobunStatus(models.IntegerChoices):
+    NONE = 0
+    REQUESTED = 1
+    ACCEPTED = 2
+    PROCEED = 3
+    COMPLETE = 4
+
+
 class GoodsCategory(AbstractCategory):
     pass
 
@@ -35,15 +43,15 @@ class Sobun(models.Model):
         User, related_name='sobuns', on_delete=models.CASCADE)
 
     time = models.DateTimeField()
-    whether = models.BooleanField()
+    status = models.IntegerField(choices=SobunStatus.choices)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = [("post", "user")]
-        index_together = [("post", "user")]
-        verbose_name_plural = "Sobun"
+        constraints = [
+            models.UniqueConstraint(fields=['post', 'user'], name='unique_post_user')
+        ]
 
     def __str__(self):
         return f"Sobun from {self.post} to {self.user}"

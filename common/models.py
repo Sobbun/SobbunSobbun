@@ -97,7 +97,7 @@ class AbstractPost(models.Model):
 
     title = models.CharField(max_length=100)
     description = models.TextField()
-    picture = models.ImageField(upload_to='pictures/post')
+    picture = models.ImageField(upload_to='pictures/post', blank=True)
 
     category = models.ForeignKey(
         AbstractCategory, on_delete=models.SET_NULL, related_name='posts', null=True)

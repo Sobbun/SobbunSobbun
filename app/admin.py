@@ -21,7 +21,7 @@ class SobunPostAdmin(admin.ModelAdmin):
 
 @admin.register(Sobun)
 class SobunAdmin(admin.ModelAdmin):
-    fields = ['post', 'user', 'time', 'whether']
+    fields = ['post', 'user', 'time', 'status']
 
 
 @admin.register(SobunRate)

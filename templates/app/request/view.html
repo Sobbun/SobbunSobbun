@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title%}sobun{% endblock %}
+{% block content %}
+  {% if debug %}
+    <p>Post : <a href="{% url 'app:post' request.post.id%}">{{ request.post.title }}</a></p>
+    <p>Post User : {{ request.post.user }}</p>
+    <p>User : {{ request.user }}</p>
+    <p>Time : {{ request.time }}</p>
+    <p>Status : {{ request.status }}</p>
+    <p>Created at : {{ request.created_at }}</p>
+    <p>Updated at : {{ request.updated_at }}</p>
+  {%endif%}
+{% endblock %}

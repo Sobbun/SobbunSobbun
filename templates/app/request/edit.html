@@ -1,0 +1,28 @@
+
+{% extends 'base.html' %}
+{% block title %}요청{% endblock %}
+{% block content%}
+{% if debug %}
+  {% include 'form_errors.html' %}
+  <form method="post">
+    {% csrf_token %}
+    <input type="datetime-local" id="time" name="time" value="{{ form.time.value|date:"c" }}"/>
+    {% if type == "update" %}
+      <select id="status" name="status">
+        {% for i in available_option %}
+          <option value="{{ i.id }}">{{ i.name }}</option>
+        {% endfor %}
+      </select>
+    {% else %}
+      <input type="hidden" id="status" name="status" value="1" />
+    {% endif %}
+    <button type="submit">
+      {% if type == "update" %}
+        Update
+      {% else %}
+        Request
+      {% endif %}
+    </button>
+  </form>
+{% endif %}
+{% endblock %}
