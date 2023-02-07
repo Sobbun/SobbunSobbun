@@ -44,7 +44,20 @@ class ChatRoom(models.Model):
             case Topic.POST_EVENT:
                 return Event.objects.get(pk=self.topic_id)
             case _:
-                raise AssertionError("Unknown Topic Type") 
+                raise AssertionError("Unknown Topic Type")
+    
+
+    @cached_property
+    def topic_title(self):
+        match self.topic_type:
+            case Topic.TEXT:
+                return self.topic_text
+            case Topic.USER:
+                return self.topic.profile.nickname
+            case Topic.POST_SOBUN | Topic.POST_EVENT:
+                return self.topic.title
+            case _:
+                raise AssertionError("Unknown Topic Type")
 
     @classmethod
     def set_topic(self, instance):

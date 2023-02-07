@@ -1,5 +1,5 @@
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.http import HttpResponseNotFound
+from django.shortcuts import render, redirect, get_object_or_404
 import common.views as commonViews
 from .models import SobunPost
 from .forms import SobunPostForm
@@ -13,7 +13,7 @@ def index(request):
     
 
 def sobun_list(request):
-    sobun_post_list = SobunPost.objects.order_by('-updated_at')
+    sobun_post_list = SobunPost.objects.filter(is_deleted=False).order_by('-updated_at')
 
     page = request.GET.get('page', 1)
     paginator = Paginator(sobun_post_list, 10)
@@ -26,7 +26,10 @@ def sobun_list(request):
 
 
 def sobun_post(request, post_id):
-    post = SobunPost.objects.get(id=post_id)
+    post = get_object_or_404(SobunPost, id=post_id)
+    if post.is_deleted and not request.user.is_superuser:
+        return HttpResponseNotFound("Not Found")
+
     context = {
         'post': post
     }
