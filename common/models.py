@@ -117,7 +117,7 @@ class AbstractPost(models.Model):
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(user=instance)
+        Profile.objects.create(user=instance, nickname=instance.username)
         TrustLevel.objects.create(user=instance)
     instance.profile.save()
     instance.trust_level.save()

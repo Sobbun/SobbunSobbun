@@ -45,11 +45,14 @@ class RequestCreateView(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         if form.instance.status != 1:
-            raise BadRequest
+            raise BadRequest("Invalid request received")
 
         post = get_object_or_404(SobunPost, pk = self.kwargs['post_id'])
         if post.is_deleted:
             raise Http404
+
+        if post.user == self.request.user:
+            raise BadRequest("Can't request a sobun to same person.")
 
         form.instance.post = post
         form.instance.user = self.request.user
@@ -82,7 +85,7 @@ class RequestUpdateView(LoginRequiredMixin, generic.UpdateView):
     def form_valid(self, form):
         # 거절 이외에는 상태가 아래로 내려갈 수 없다.
         if form.instance.status != 0 and form.instance.status < self.object.status:
-            raise BadRequest
+            raise BadRequest("Can't de-progress status")
         
         # 게시글 삭제시 미진행.
         if self.object.post.is_deleted:
@@ -92,16 +95,17 @@ class RequestUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     def get_success_url(self):
        pk = self.kwargs["pk"]
-       return reverse("app:rate", kwargs={"pk": pk})
+       return reverse("app:request", kwargs={"pk": pk})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["type"] = "update"
         # 거절은 따로 처리.
-        context["available_option"] = list(filter(lambda x: x['id'] >= self.object.status, self.available_options))
+        filtered = list(filter(lambda x: x['id'] >= self.object.status, self.available_options))
+        context["available_option"] = self.available_options if self.request.user.is_superuser else filtered
 
-        if self.object.status == 4:
-            raise BadRequest
+        if self.object.status == 4 and not self.request.user.is_superuser:
+            raise BadRequest("This request is completed")
 
         return context
 

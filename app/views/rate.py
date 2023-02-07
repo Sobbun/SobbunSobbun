@@ -43,12 +43,12 @@ class RateCreateView(LoginRequiredMixin, generic.CreateView):
             Q(user=self.request.user.id) | Q(post__user=self.request.user.id), 
             pk=self.kwargs['sobun_id'], status=SobunStatus.COMPLETE)
         if not sobun_query.exists():
-            raise BadRequest
+            raise BadRequest("This sobun can't be rated")
 
         # 평가 내역이 있을시
         rate_query = SobunRate.objects.filter(user_from=self.request.user, sobun__pk=self.kwargs['sobun_id'])
         if rate_query.exists():
-            raise BadRequest
+            raise BadRequest("Already rated")
 
         sobun = Sobun.objects.get(pk=self.kwargs['sobun_id'])
 
@@ -57,8 +57,7 @@ class RateCreateView(LoginRequiredMixin, generic.CreateView):
 
         # 두명이 같을시
         if sobun_user == post_user:
-            raise BadRequest
-
+            raise BadRequest("User can't not be rate this sobun. ")
 
         form.instance.user_from = self.request.user
         form.instance.user_to = post_user if sobun_user == self.request.user else sobun_user
