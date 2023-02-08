@@ -27,7 +27,7 @@ class Profile(models.Model):
 
 
 class Area(models.Model):
-    code = models.IntegerField()
+    code = models.IntegerField(unique=True)
     name = models.TextField()
     center = models.TextField(blank=True)
     version = models.DateField()
