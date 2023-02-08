@@ -16,7 +16,7 @@ class SobunTagAdmin(admin.ModelAdmin):
 
 @admin.register(SobunPost)
 class SobunPostAdmin(admin.ModelAdmin):
-    fields = ['title', 'user', 'description', 'picture', 'place', 'product', 'sobun_price', 'sobun_unit', 'schedule', 'category',  'tags', 'is_deleted']
+    fields = ['title', 'user', 'description', 'picture', 'place', 'product', 'sobun_price', 'sobun_unit', 'schedule', 'category', 'is_deleted']
 
 
 @admin.register(Sobun)
