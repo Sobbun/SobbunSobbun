@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views import generic
 from django.urls import reverse_lazy
+from .models import Profile
 
 User = get_user_model()
 
@@ -19,6 +20,9 @@ class SignupView(generic.CreateView):
 
 
 class UpdateProfileView(LoginRequiredMixin, generic.UpdateView):
-    form = UpdateProfileForm
+    form_class = UpdateProfileForm
     success_url = reverse_lazy('common:profile_edit')
     template_name = 'common/profile/edit.html'
+
+    def get_object(self):
+        return self.request.user.profile

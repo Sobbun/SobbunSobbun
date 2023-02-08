@@ -8,7 +8,7 @@ from ..forms import SobunPostForm
 
 
 
-class PostListView(generic.ListView):
+class PostListView(LoginRequiredMixin, generic.ListView):
     model = SobunPost
     ordering = '-updated_at'
     context_object_name = 'posts'
@@ -20,7 +20,7 @@ class PostListView(generic.ListView):
         return qs.filter(is_deleted=False)
 
 
-class PostDetailView(generic.DetailView):
+class PostDetailView(LoginRequiredMixin, generic.DetailView):
     model = SobunPost
     context_object_name = 'post'
     template_name = 'app/sobun/post.html'

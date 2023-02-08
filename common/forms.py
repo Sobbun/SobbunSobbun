@@ -17,16 +17,14 @@ class SignupForm(UserCreationForm):
         fields = ['username', 'password1', 'password2', 'phone']
 
 
-class UpdateUserForm(forms.ModelForm):
-    phone = PhoneNumberField(region='KR', required=True,)
+# class UpdateUserForm(forms.ModelForm):
+#     phone = PhoneNumberField(region='KR',)
+
+#     class Meta:
+#         model = User
 
 
-class UpdateProfileForm(forms.Form):
+class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-
-
-class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
-    template_name = 'users/change_password.html'
-    success_message = "Successfully Changed Your Password"
-    success_url = reverse_lazy('users-home')
+        fields = ['nickname', 'bio', 'picture']
