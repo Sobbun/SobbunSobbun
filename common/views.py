@@ -1,11 +1,6 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-
 from .forms import SignupForm, UpdateProfileForm
-
-from django.http import Http404
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 from django.views import generic
 from django.urls import reverse_lazy
 

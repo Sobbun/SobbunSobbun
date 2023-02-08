@@ -1,94 +1,95 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseNotAllowed, HttpResponseForbidden, HttpResponseNotModified
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseForbidden, HttpResponseNotModified
 from .models import ChatRoom, ChatMessage, ChatMessageHistory
 from .forms import SendMessageForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import generic
+from django.urls import reverse
 
 # Create your views here.
 
-@login_required
-def chatroom_list(request):
-    user = request.user
-    context = {
-        'rooms': user.chat_rooms.all()
-    }
-    return render(request, 'chat/list.html', context)
 
-@login_required
-def chatroom(request, room_id):
-    user = request.user
-    room = get_object_or_404(ChatRoom, pk=room_id)
-    
-    # 참여자가 아니면 403
-    if not room.participants.contains(user):
-        return HttpResponseForbidden("Forbidden")
 
-    # 기존 메세지를 전부 checked.
-    messages = ChatMessage.objects.filter(room=room).exclude(checked_by=user)
-    for message in messages:
-        message.checked_by.add(user)
+class ChatRoomListView(LoginRequiredMixin, generic.ListView):
+    model = ChatRoom
+    ordering = '-updated_at'
+    context_object_name = 'rooms'
+    paginate_by = 10
+    template_name = 'chat/list.html'
+
+    def get_queryset(self):
+        return ChatRoom.objects.filter(participants=self.request.user)
+
+
+class ChatRoomView(LoginRequiredMixin, generic.DetailView, generic.FormView):
+    model = ChatRoom
+    context_object_name = 'room'
+    form_class = SendMessageForm
+    template_name = 'chat/room.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = get_object_or_404(ChatRoom, pk=kwargs['pk'])
+        if not self.object.participants.contains(self.request.user):
+            return HttpResponseForbidden("User is not participants")        
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        self.mark_all_as_checked()
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.mark_all_as_checked()
+        form = self.get_form()
+        return self.form_valid(form) if form.is_valid() else self.form_invalid(form)
+
+    def form_valid(self, form):
+        message = form.save(commit=False)
+        message.author = self.request.user
+        message.room = self.get_object()
         message.save()
+        message.refresh_from_db()
+        message.checked_by.add(self.request.user)
+        message.save()
+        return super().form_valid(form)
 
-    context = {
-        'room': room
-    }
-    return render(request, 'chat/room.html', context)
+    def get_success_url(self) -> str:
+        pk = self.object.id
+        return reverse("chat:room", kwargs={"pk": pk})
 
-@login_required
-def send_message(request, room_id):
-    print(request.method)
-    user = request.user
-    room = get_object_or_404(ChatRoom, pk=room_id)
+    def mark_all_as_checked(self):
+        messages = ChatMessage.objects.filter(room=self.object).exclude(checked_by=self.request.user)
+        for message in messages:
+            message.checked_by.add(self.request.user)
+            message.save()
 
-    if request.method != 'POST':
-        return HttpResponseNotAllowed("Method Not Allowed")
+class UpdateMessageView(LoginRequiredMixin, generic.UpdateView, generic.FormView):
+    model = ChatMessage
+    form_class = SendMessageForm
 
-    if not room.participants.contains(user):
-        return HttpResponseForbidden("Forbidden")    
-    
-    form = SendMessageForm(request.POST)
-    if not form.is_valid():
-        return HttpResponseNotAllowed("Not allowed")
+    def dispatch(self, request, *args, **kwargs):
+        self.message = get_object_or_404(ChatMessage, pk=kwargs['pk'])
+        if self.message.author != self.request.user:
+            return HttpResponseForbidden("User is not has a right of this message")        
+        return super().dispatch(request, *args, **kwargs)
 
-    message = form.save(commit=False)
-    message.author = user
-    message.room = room
-    message.save()
-    message.refresh_from_db()
-    message.checked_by.add(user)
-    message.save()
 
-    return redirect('chat:room', room_id=room.id)
+    def form_valid(self, form):
+        new = form.cleaned_data["content"]
+        old = self.message.content
 
-@login_required
-def edit_message(request, message_id):
-    print(request.method)
-    user = request.user
-    message = get_object_or_404(ChatMessage, pk=message_id)
+        if new == old:
+            return HttpResponseNotModified()
 
-    if request.method != 'POST':
-        return HttpResponseNotAllowed("Method Not Allowed")
+        ChatMessageHistory.objects.create(
+            message = self.message,
+            content = old
+        )
 
-    if message.author != user:
-        return HttpResponseForbidden("Forbidden")
-    
-    form = SendMessageForm(request.POST)
-    if not form.is_valid():
-        return HttpResponseNotAllowed("Not allowed")
+        self.message.content = form.cleaned_data["content"]
+        self.message.save()
 
-    new = form.cleaned_data["content"]
-    old = message.content 
+        return super().form_valid(form)
 
-    if new == old:
-        return HttpResponseNotModified()
-
-    ChatMessageHistory.objects.create(
-        message = message,
-        content = old
-    )
-
-    message.content = form.cleaned_data["content"]
-    message.save()
-
-    return redirect('chat:room', room_id=message.room.id)
-
+    def get_success_url(self) -> str:
+        pk = self.object.room.id
+        return reverse("chat:room", kwargs={"pk": pk})

@@ -25,12 +25,12 @@
 
   <div class="wrap">
     {% for message in room.messages.all %}
-      <div class="chat_ch{% if message.author == request.user %}1{% else %}2{% endif %}">
+      <div class="chat_ch{% if message.author == request.user %}2{% else %}1{% endif %}">
         <div class="textbox">{{ message.content }}</div>
       </div>
     {% endfor %}
   </div>
-  <form method="post" action="{% url 'chat:send_message' room.id %}">
+  <form method="post" action="{% url 'chat:room' room.id %}">
     {% csrf_token %}
     <div class="chat_write" style="height:30px; background-color:lightgray">
       <div class="chat_send">
@@ -65,7 +65,7 @@
   </li>
   {% endfor %}
 </ul>
-<form method="post" action="{% url 'chat:send_message' room.id %}">
+<form method="post" action="{% url 'chat:room' room.id %}">
   {% csrf_token %}
   <input type="text" name="content" id="id_content" />
   <br />
