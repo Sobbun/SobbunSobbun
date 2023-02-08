@@ -6,7 +6,7 @@
   {% if room.topic_type == 2 %}
   <div class="chatProfile" style="height: 90px;">
     {% if room.topic.profile.picture %}
-      <div class="profile_icon"><img src="{{ room.topic.profile.picture.url }}"></div>
+      <div class="profile_icon"><i class="fa-regular"><img style="height:100px"src="{{ room.topic.profile.picture.url }}"></i></div>
     {% else %} 
       <div class="profile_icon"><i class="fa-regular fa-circle-user"></i></div>
     {% endif %}
