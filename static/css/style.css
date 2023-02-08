@@ -685,3 +685,260 @@ button {
   font-size: 14px;
   font-weight: bold;
 }
+
+/******************real Main ************** */
+@keyframes slidy {
+  0% {
+    left: 0%;
+  }
+  20% {
+    left: 0%;
+  }
+  25% {
+    left: -100%;
+  }
+  45% {
+    left: -100%;
+  }
+  50% {
+    left: -200%;
+  }
+  70% {
+    left: -200%;
+  }
+  75% {
+    left: -300%;
+  }
+  95% {
+    left: -300%;
+  }
+  100% {
+    left: -400%;
+  }
+}
+
+#slider {
+  overflow: hidden;
+  margin-top: 60px;
+  padding-top: 0px;
+  width: 100%; /**** 100%에서 수정함 ****/
+}
+/* 이미지 개수 늘리면 조정해야 할 부분 */
+#slider figure img {
+  width: 16.6666666667%;
+  float: left;
+}
+#slider figure {
+  position: relative;
+  width: 600%;
+  margin: 0;
+  top: 0;
+  left: 0;
+  text-align: left;
+  font-size: 0;
+  /* 자동으로 넘어가는 설정*/
+  -webkit-animation: 30s slidy ease-in-out infinite;
+  animation: 30s slidy ease-in-out infinite;
+}
+
+/* object-fit:contain  ---> 가로,세로 비율 유지한채 사이즈 채우는 형식*/
+#slider img {
+  width: 100%;
+  height: 400px;
+  object-fit: contain;
+}
+
+.real_body_wrapper table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.real_body_wrapper img {
+  width: 200px;
+  height: 200px;
+}
+.real_body_wrapper {
+  margin-top: 10px;
+}
+/* ************ 게시판 글쓰기  ************/
+* {
+  margin: 0 auto;
+  padding: 0;
+}
+#container_postWrite {
+  width: 70%;
+}
+
+#container_postWrite input:focus {
+  outline-color: #58ccff;
+}
+
+#container_postWrite textarea:focus {
+  outline-color: #58ccff;
+}
+
+#container_postWrite form {
+  margin-top: 20px;
+}
+
+#container_postWrite input {
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  width: 50%;
+  height: 30px;
+  margin-top: 20px;
+  cursor: auto;
+}
+
+#container_postWrite textarea {
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  width: 100%;
+  height: 300px;
+  margin-top: 20px;
+  margin-left: 30px;
+  cursor: auto;
+}
+
+#container_postWrite button {
+  background-color: #58ccff;
+  border: none;
+  color: black;
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  float: right;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+#container_postWrite img {
+  margin-top: 10px;
+  width: 220px;
+  height: 220px;
+  cursor: pointer;
+}
+
+#container_postWrite input[type="datetime-local"]::-webkit-datetime-edit-text {
+  -webkit-appearance: none;
+  display: none;
+}
+#container_postWrite
+  input[type="datetime-local"]::-webkit-datetime-edit-month-field {
+  -webkit-appearance: none;
+  display: none;
+}
+#container_postWrite
+  input[type="datetime-local"]::-webkit-datetime-edit-day-field {
+  -webkit-appearance: none;
+  display: none;
+}
+#container_postWrite
+  input[type="datetime-local"]::-webkit-datetime-edit-year-field {
+  -webkit-appearance: none;
+  display: none;
+}
+
+#container_postWrite select {
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  width: 50%;
+  height: 30px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+#main_banner img {
+  width: 60%;
+  height: 100%;
+  object-fit: fill;
+}
+/************* 유저평가 ************/
+.rating_main {
+  width: 80%;
+  height: 300px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+rating {
+  width: 80%;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.rating_header {
+  width: 80%;
+  height: 70px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.rating_button {
+  width: 80%;
+  height: 100px;
+  clear: left;
+  text-align: center;
+  margin: 0 auto;
+}
+#rating_button {
+  background-color: #2980b9;
+  border: #2980b9;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 20px;
+  width: 150px;
+  margin-top: 50px;
+}
+
+.rating_check textarea {
+  width: 60%;
+  height: 6.25em;
+  resize: none;
+  margin-left: 20%;
+}
+
+#check-btn {
+  display: none;
+}
+#check-btn:checked ~ .menubars {
+  display: block;
+}
+.menubars {
+  display: none;
+}
+
+/************ footer ************/
+footer {
+  background-color: lightgrey;
+  border-top: 1px solid #333;
+  width: 100%;
+  margin-top: 50px;
+}
+footer .inner {
+  padding: 40px 0 60px 0;
+}
+footer .info {
+  margin-top: 30px;
+  text-align: center;
+}
+footer .info span {
+  margin-right: 20px;
+  color: black;
+  font-size: 12px;
+}
+footer .info span:last-child {
+  margin-right: 0;
+}
+footer .copyright {
+  color: black;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 12px;
+}
+footer .logo {
+  display: block;
+  margin: auto;
+}
