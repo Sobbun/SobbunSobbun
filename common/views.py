@@ -12,6 +12,10 @@ class IndexView(generic.View):
     def get(self, request):
         return render(request, 'common/index.html')
 
+class MypageView(generic.View):
+    def get(self, request):
+        return render(request, 'common/mypage.html')
+
 class SignupView(generic.CreateView):
     #model = User
     form_class = SignupForm
@@ -25,4 +29,4 @@ class UpdateProfileView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'common/profile/edit.html'
 
     def get_object(self):
-        return self.request.user.profile
+        return self.request.user.profile # type: ignore

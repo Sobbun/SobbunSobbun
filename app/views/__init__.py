@@ -9,5 +9,3 @@ def index(request):
     if request.user.is_authenticated:
         return PostListView.as_view()(request)
     return commonViews.IndexView.as_view()(request)
-
-

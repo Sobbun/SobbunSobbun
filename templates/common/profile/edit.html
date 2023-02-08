@@ -25,7 +25,7 @@
 
   <div style=" margin-top: 40px; margin-left: 15px;">
     <h4 style="float: left;"><label for="nickname">닉네임</label></h4>
-    <input id="nickname" name="nickname" type="text" style="float: left; margin-left: 30px;" placeholder="{{ form.nickname.value|default_if_none:request.user.profile.nickname }}" onfocus="this.placeholder = ''" onblur="this.placeholder = '{{ form.nickname.value|default_if_none:request.user.profile.nickname }}'" />
+    <input id="nickname" name="nickname" type="text" style="float: left; margin-left: 30px;" value="{{ request.user.profile.nickname }}" />
   </div>
 
   <!--div id="content_login3" style=" margin-top: 100px; margin-left: 15px;">
@@ -42,7 +42,7 @@
   <br>
   <div id="content_login3" style="margin-top: 40px; margin-left: 15px;">
     <h4 style="float: left;"> 자기소개 </h4>
-    <textarea name="bio" id="bio" cols="40" rows="5" placeholder="{{ form.bio.value|default_if_none:request.user.profile.bio }}" style="margin-left: 12px;" onfocus="this.placeholder = ''" onblur="this.placeholder = '{{ form.bio.value|default_if_none:request.user.profile.bio }}'" /></textarea>
+    <textarea name="bio" id="bio" cols="40" rows="5" style="margin-left: 12px;" />{{ request.user.profile.bio }}</textarea>
   </div>
 
   <br>

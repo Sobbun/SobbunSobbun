@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}마이페이지{% endblock %}
+{% load static %}
+{% block content%}
+<div id="container_mypage">
+    <div id="pro" style="margin-top: 20px;">
+      <div id="profileimg" style="background: lightgray; border-radius: 70%; width: 100px; 
+              height: 100px; overflow: hidden; margin-left: 50px; float: left;">
+      {% if form.picture.value %}
+        <img src="{{ form.picture.value.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+      {% elif request.user.profile.picture %}
+        <img src="{{ request.user.profile.picture.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+      {% else%}
+        <img src="{% static 'img/logo.png' %}" style="width: 100%; height: 100%; object-fit: cover;">
+      {% endif %}
+      </div>
+      <div id="pro2" style="float: left; text-align: left; margin-left: 10px;">
+        <h2 style="font-size: 30px;">  {{ request.user.profile.nickname|default_if_none:request.user.username }} </h2>
+        <br>
+        <p style="font-size: 15px; margin-top: 10px;"> 안녕하세요, {{ request.user.profile.nickname|default_if_none:request.user.username }} 입니다. </p>
+      </div>
+      <div id="setting" style="float: right;">
+        <a href="{% url 'common:profile_edit' %}">
+        <button style="background-color: lightgray; border: none;
+                       color: black; width: 100px; height: 40px; border-radius: 5px;
+                       font-size: 15px; font-weight: bold; margin-right: 150px;
+                       margin-top: 50px;">프로필 수정</button></a>
+      </div>
+      <div id="trust" style="float: right; margin-right: 10px; margin-top: 50px;">
+        <h3 style="font-size: 15px;"> 신뢰도 {{ request.user.trust_level.level|floatformat:"0" }}% </h3>
+        <progress max="100" value="{{ request.user.trust_level.level|floatformat:"0" }}" style="width: 80px; height: 20px;"></progress>
+      </div>
+    
+      <div id="content_mypage">
+        <br>
+        <hr>
+        <h1 style="text-align: left; margin-top: 20px; margin-left: 30px; float: left;"> 찜 </h1>
+        <a href="{% url 'app:request_list' %}"><img src="{% static 'img/right_arrow.png' %}" style="float: right; width: 30px; height: 30px; margin-top: 30px; margin-right: 20px;" ></a>
+      </div>
+
+      <div id="content_mypage">
+        <br>
+        <h1 style="text-align: left; margin-top: 20px; margin-left: 30px; float: left;"> 거래 내역 </h1>
+        <a href="{% url 'app:request_list' %}"><img src="{% static 'img/right_arrow.png' %}" style="float: right; width: 30px; height: 30px; margin-top: 30px; margin-right: 20px;;"></a>
+      </div>
+    </div>
+</div>
+{% endblock %}
