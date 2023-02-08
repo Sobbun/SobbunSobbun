@@ -8,6 +8,6 @@ from .rate import RateCreateView, RateDetailView, RateListView, RateUserListView
 def index(request):
     if request.user.is_authenticated:
         return PostListView.as_view()(request)
-    return commonViews.index(request)
+    return commonViews.IndexView.as_view()(request)
 
 

@@ -7,7 +7,7 @@ app_name = 'common'
 urlpatterns = [
     path('login', auth_views.LoginView.as_view(template_name='common/login.html'), name='login'),
     path('logout', auth_views.LogoutView.as_view(), name='logout'),
-    path('signup', views.signup, name='signup'),
+    path('signup', views.SignupView.as_view(), name='signup'),
 
-    path('profile/edit', views.profile_update, name='profile_edit'),
+    path('profile/edit', views.UpdateProfileView.as_view(), name='profile_edit'),
 ]

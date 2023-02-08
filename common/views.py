@@ -3,37 +3,24 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import SignupForm, UpdateProfileForm
 
-def index(request):
-    return render(request, 'common/index.html')
+from django.http import Http404
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
+from django.views import generic
+from django.urls import reverse_lazy
 
 
-# 가입
-def signup(request):
-    if request.method == "POST":
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            # 유저 가입             
-            user = form.save(commit=False)
-            user.save()
-            
-            user.refresh_from_db()
+class IndexView(generic.View):
+    def get(self, request):
+        return render(request, 'common/index.html')
 
-            # FIXME: Profile
-            return redirect("app:index") # redirect('common:profile_edit')
-    else:
-        form = SignupForm()
-    return render(request, 'common/signup.html', { 'form': form })
-
-# 프로필
-@login_required
-def profile_update(request):
-    if request.method == "POST":
-        form = UpdateProfileForm(request.POST)
-        if form.is_valid():
-            
+class SignupView(generic.CreateView):
+    form = SignupForm
+    success_url = reverse_lazy('common:profile_edit')
+    template_name = 'common/signup.html'
 
 
-            return redirect('common:profile_edit')
-    else:
-        form = UpdateProfileForm()
-    return render(request, 'common/profile/edit.html', { 'form': form })
+class UpdateProfileView(LoginRequiredMixin, generic.UpdateView):
+    form = UpdateProfileForm
+    success_url = reverse_lazy('common:profile_edit')
+    template_name = 'common/profile/edit.html'
