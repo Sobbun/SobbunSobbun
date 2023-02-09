@@ -1,9 +1,58 @@
 
 {% extends 'base.html' %}
 {% block title %}요청{% endblock %}
+{% load debug_tags %}
+{% load static %}
 {% block content%}
-{% if debug %}
   {% include 'form_errors.html' %}
+    
+    <form method="POST" onsubmit="this.querySelector('#detail').value += '%|%' + [...this.querySelectorAll(`label:has(input[type='checkbox']:checked)`)].map(x => x.innerText).join('|');return true;">
+      {% csrf_token %}
+      <header class="rating_header">
+        <h1 style="margin-right: 60px;margin-top: 70px;">거래 후기 보내기</h1>
+        </header>
+        <main class="rating_main">
+          <h2> {{ user_from }} 님,
+          <br>
+          {{ user_to}}님과의 거래가 어떠셨나요?
+          </h2>
+        <h4>선택해 주세요</h4>
+        <img src="{% static 'img/positive-vote.png' %}" style="width:200px; height:200px; float: left; margin-top: 20px; margin-left:20%; margin-right:25%">
+        
+        
+        <img src="{% static 'img/negative-vote.png' %}" style="width:200px; height:200px; float: left; margin-top: 20px; margin-right:20%">
+      </main>
+      <br>
+      <div class="rating_check" style="clear:left">
+        <br>
+        <input id="check-btn-good" name="type" value="1" class="check-btn" type="radio" />
+        <label for="check-btn-good" class="check-btn" style="margin-left:29%;"><h2 style="float:left; ">GOOD</h2></label>
+
+        <input id="check-btn-bad" name="type" value="-1" class="check-btn" type="radio" />
+        <label for="check-btn-bad" class="check-btn" style="margin-left:27%; margin-right:30%" ><h2 style="float: left; margin-left:30%; margin-right:30%">BAD</h2></label>
+        <ul class="menubars" style="float:left; margin-left:22%;">
+                  <label><input type="checkbox" >상품설명이 설명한 것과 같아요.</label><br>
+                  <label><input type="checkbox" >상품설명이 자세해요.</label><br>
+                  <label><input type="checkbox" >친절하고 매너가 좋아요.</label><br>
+                  <label><input type="checkbox" >시간 약속을 잘 지켜요.</label><br>
+                  <label><input type="checkbox" >응답이 빨라요.</label><br>
+              </ul>
+
+        <ul class="menubars" style="float:left; margin-left:15%;">
+                  <label><input type="checkbox" >시간 약속을 안 지켜요.</label><br>
+                  <label><input type="checkbox" >채팅 메시지를 읽고도 답이 없어요.</label><br>
+                  <label><input type="checkbox" >약속 장소에 나타나지 않았어요.</label><br>
+                  <label><input type="checkbox" >불친절해요.</label><br>
+                  <label><input type="checkbox" >상품 상태가 설명과 달라요.</label><br>
+              </ul>
+              <br>
+        <textarea name="detail" id="detail" class="menubars" placeholder="거래 후기를 적어주세요."></textarea><br>
+      </div>
+      <div class="rating_button">
+       <button id="rating_button" type="submit">후기 보내기</button>
+      </div>
+    </form>
+  {% if show_debug_data %}
   <form method="post">
     {% csrf_token %}
     <label for="type">Type</label><br/>
@@ -16,5 +65,5 @@
       Rate
     </button>
   </form>
-{% endif %}
+  {% endif %}
 {% endblock %}

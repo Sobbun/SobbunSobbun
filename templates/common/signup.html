@@ -7,15 +7,15 @@
     {% csrf_token %}
     <div class="logWrap">
       <label><b>회원 ID</b></label><br>
-      <input type="text" name="username" id="id_username" required placeholder="내용을 입력해주세요" value="{{ form.username.value|default_if_none:'' }}"><br>
+      <input class="log_text" type="text" name="username" id="id_username" required placeholder="내용을 입력해주세요" value="{{ form.username.value|default_if_none:'' }}"><br>
       <label><b>비밀번호</b></label><br>
-      <input type="password" name="password1" autocomplete="new-password" required id="id_password1" placeholder="내용을 입력해주세요" value="{{ form.password1.value|default_if_none:'' }}"><br>
-      {% comment %} <button type="submit">인증번호 받기</button><br> {% endcomment %}
+      <input class="log_text" type="password" name="password1" autocomplete="new-password" required id="id_password1" placeholder="내용을 입력해주세요" value="{{ form.password1.value|default_if_none:'' }}"><br>
+      {% comment %} <button class="log_text" type="submit">인증번호 받기</button><br> {% endcomment %}
       <label><b>비밀번호 확인</b></label><br>
-      <input type="password" name="password2" autocomplete="new-password" required id="id_password2" placeholder="내용을 입력해주세요" value="{{ form.password2.value|default_if_none:'' }}"><br>
-      {% comment %} <button type="submit">중복확인</button><br> {% endcomment %}
+      <input class="log_text" type="password" name="password2" autocomplete="new-password" required id="id_password2" placeholder="내용을 입력해주세요" value="{{ form.password2.value|default_if_none:'' }}"><br>
+      {% comment %} <button class="log_text" type="submit">중복확인</button><br> {% endcomment %}
       <label><b>전화번호</b></label><br>
-      <input type="tel" name="phone" required id="id_phone" placeholder="내용을 입력해주세요"><br><br>
+      <input class="log_text" type="tel" name="phone" required id="id_phone" placeholder="내용을 입력해주세요"><br><br>
       <button type="submit">다음</button>
     </div>
   </form>

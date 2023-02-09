@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>환영합니다 - 소뿐소뿐</title>
+
+    {% load static %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.css' %}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body style="overflow-x: hidden">
+    <div class="loginbox_5">
+      <img
+        src="{% static 'img/logo.png' %}"
+        align="left"
+        width="300"
+        height="300"
+        class="logo_5"
+      />
+      <form>
+        <fieldset>
+          <span>회원가입이 완료되었습니다.</span>
+          <pre></pre>
+          <span>소뿐소뿐의 일원이 되신 것을 환영합니다.</span>
+          <pre></pre>
+          <a href="{% url 'common:login' %}"
+            ><button type="submit">로그인 하기</button></a
+          >
+        </fieldset>
+      </form>
+    </div>
+  </body>
+</html>

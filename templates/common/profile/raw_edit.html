@@ -1,0 +1,52 @@
+{% load static %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token%}
+  <div id="container_login3">
+    <h3 style="text-align: left; margin-top: 20px; margin-bottom: 10px;"> 프로필 설정</h3>
+    <hr>
+  
+    <div id="photo_login3" style="margin-top: 20px;">
+      <h4 style="float: left; margin-left: 20px; margin-top: 40px;"> 사진 </h4>
+      <div id="profileimg_login3" style="background: lightgray; border-radius: 70%; width: 100px; 
+      height: 100px; overflow: hidden; margin-left: 100px;">
+        {% if form.picture.value %}
+          <img src="{{ form.picture.value.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+        {% elif request.user.profile.picture %}
+          <img src="{{ request.user.profile.picture.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+        {% else%}
+          <img src="{% static 'img/logo.png' %}" style="width: 100%; height: 100%; object-fit: cover;">
+        {% endif %}
+      </div>
+      {{ form.picture }}
+    </div>
+  
+    <div style=" margin-top: 40px; margin-left: 15px;">
+      <h4 style="float: left;"><label for="nickname">닉네임</label></h4>
+      <input id="nickname" name="nickname" type="text" style="float: left; margin-left: 30px;" value="{{ request.user.profile.nickname }}" />
+    </div>
+  
+    <!--div id="content_login3" style=" margin-top: 100px; margin-left: 15px;">
+      <h4 style="float: left;"><label for="date">생년월일</label></h4>
+      <input id="date_login3" type="date" style="float: left; margin-left: 15px;">
+    </div>
+  
+    <br>
+    <div id="content_login3" style=" margin-top: 40px; margin-left: 15px;">
+      <h4 style="float: left;"><label for="emalul">이메일</label></h4>
+      <input id="email_login3" type="email" style="float: left; margin-left: 30px;" placeholder="기존 이메일" onfocus="this.placeholder = ''" onblur="this.placeholder = '기존 이메일'" />
+    </div-->
+  
+    <br>
+    <div id="content_login3" style="margin-top: 40px; margin-left: 15px;">
+      <h4 style="float: left;"> 자기소개 </h4>
+      <textarea name="bio" id="bio" cols="40" rows="5" style="margin-left: 12px;" />{{ request.user.profile.bio }}</textarea>
+    </div>
+  
+    <br>
+    <div id="content_login3" style="float: right;">
+      <button style="background-color: #58CCFF; border: none; margin-left: 50px;
+                     color: black; width: 100px; height: 40px; border-radius: 5px;
+                     font-size: 15px; font-weight: bold; margin-top: -10px;" type="submit"> 저장 </button>
+    </div>
+  </div>
+</form>
