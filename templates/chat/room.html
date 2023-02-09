@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title%}채팅방{% endblock %}
 {% load debug_tags %}
+{% load urlparams %}
 {% block content%}
 {% if room %}
   <div class="chatwrap">
@@ -42,6 +43,12 @@
             <div class="finish" style="float:right;">
               <button id="button" type="button" onclick="location.href='{% url 'app:temp_request_chat_complete' sobun_id=room.topic.id chat_id=room.id %}'" style="margin-top:20px; margin-bottom:6px; margin-right:10px">거래 완료</button>
             </div>
+          {% elif room.topic.status == 4 %}
+            {% if room.topic.rate.all.0.user_from != request.user and room.topic.rate.all.1.user_from != request.user %}
+              <div class="finish" style="float:right;">
+                <button id="button" type="button" onclick="location.href='{% url 'app:rate_create' sobun_id=room.topic.id %}{% urlparams next=request.get_full_path %}'" style="margin-top:20px; margin-bottom:6px; margin-right:10px; background-color:skyblue">평가</button>
+              </div>
+            {% endif %}
           {% else %}
             <div class="finish" style="float:right;">
               <button id="button" type="button" disabled style="margin-top:20px; margin-bottom:6px; margin-right:10px; background-color:lightgray">거래 완료</button>
@@ -67,6 +74,12 @@
               <div class="finish" style="float:right;">
                 <button id="button" type="button" onclick="location.href='{% url 'app:temp_request_chat_complete' sobun_id=room.topic.id chat_id=room.id %}'" style="margin-top:20px; margin-bottom:6px; margin-right:10px">거래 완료</button>
               </div>
+            {% elif room.topic.status == 4 %}
+              {% if room.topic.rate.all.0.user_from != request.user and room.topic.rate.all.1.user_from != request.user %}
+                <div class="finish" style="float:right;">
+                  <button id="button" type="button" onclick="location.href='{% url 'app:rate_create' sobun_id=room.topic.id %}{% urlparams next=request.get_full_path %}'" style="margin-top:20px; margin-bottom:6px; margin-right:10px; background-color:skyblue">평가</button>
+                </div>
+              {% endif %}
             {% else %}
               <div class="finish" style="float:right;">
                 <button id="button" type="button" disabled style="margin-top:20px; margin-bottom:6px; margin-right:10px; background-color:lightgray">거래 완료</button>

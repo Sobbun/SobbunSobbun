@@ -1,7 +1,9 @@
 from django.db.models import Q
 from django.core.exceptions import BadRequest
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
+from django.shortcuts import redirect
 from django.urls import reverse
 
 from ..models import Sobun, SobunRate, SobunStatus
@@ -55,9 +57,9 @@ class RateCreateView(LoginRequiredMixin, generic.CreateView):
         post_user = sobun.post.user
         sobun_user = sobun.user
 
-        # 두명이 같을시
-        if sobun_user == post_user:
-            raise BadRequest("User can't not be rate this sobun. ")
+        # 두명이 같을시, 다만 DEBUG 상태에서는 무시.
+        if sobun_user == post_user and not settings.DEBUG:
+            raise BadRequest("User can't not be rate this sobun as it is same user")
 
         form.instance.user_from = self.request.user
         form.instance.user_to = post_user if sobun_user == self.request.user else sobun_user
@@ -66,8 +68,11 @@ class RateCreateView(LoginRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-       pk = self.object.id
-       return reverse("app:rate", kwargs={"pk": pk})
+        next = self.request.GET.get("next")
+        if next:
+            return next
+        pk = self.object.id
+        return reverse("app:rate", kwargs={"pk": pk})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

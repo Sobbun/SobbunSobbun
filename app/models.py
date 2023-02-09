@@ -67,9 +67,12 @@ class SobunRate(models.Model):
     user_to = models.ForeignKey(
         User, related_name='ratings_received', on_delete=models.CASCADE)
     sobun = models.ForeignKey(
-        Sobun, null=True, on_delete=models.SET_NULL)
+        Sobun, related_name='rate', null=True, on_delete=models.SET_NULL)
 
     type = models.IntegerField(choices=SobunRateType.choices)
     detail = models.TextField(max_length=300)
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Sobun rate from {self.user_from} to {self.user_to} based on {self.sobun}"

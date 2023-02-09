@@ -294,6 +294,7 @@ div.write {
 }
 /*왼쪽 말풍선 꼬리 생성*/
 .wrap .chat_ch1 .textbox::before {
+  font-family: var(--bs-font-monospace);
   left: -18px;
   content: "◀";
   color: #ddd;
@@ -311,6 +312,7 @@ div.write {
 }
 
 .wrap .chat_ch2 .textbox::before {
+  font-family: var(--bs-font-monospace);
   right: -15px;
   content: "▶";
   color: #40f608;

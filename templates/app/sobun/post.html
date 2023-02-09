@@ -54,7 +54,7 @@
     </div>
   {% endif%}
 </div>
-  {% if debug and request.user.is_superuser and false %}
+  {% if show_debug_data and request.user.is_superuser and false %}
     <p>Title : {{ post.title }}</p>
     <p>Description : {{ post.description }}</p>
     <p>User : {{ post.user }}</p>

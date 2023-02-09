@@ -3,6 +3,7 @@ from chat.models import ChatRoom, Topic
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.http import HttpResponseForbidden
 
 
@@ -38,4 +39,4 @@ def temp_request_chat_complete(request, sobun_id, chat_id):
 
     req.status = SobunStatus.COMPLETE
     req.save()
-    return redirect('chat:room', pk=chat_id )
+    return redirect(reverse('app:rate_create', kwargs={"sobun_id": sobun_id}) + f'?next={reverse("chat:room", kwargs={"pk": chat_id})}')
