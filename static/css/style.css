@@ -149,14 +149,14 @@ div.write {
   margin-left: 50px;
 }
 .small_Menu_post1 {
-  border: 1px solid black;
-  border-radius: 5px;
+  border-radius: 10%;
   margin-right: 20px;
-  font-size: 18px;
-  margin-top: 15px;
-  padding: 5px 5px;
+  font-size: 14px;
+  margin-top: 35px;
+  padding: 7px 10px;
   cursor: pointer;
-  background-color: lightgray;
+  background-color: #96b1d0;
+  color: white;
 }
 .post_wrapper {
   position: relative;
@@ -227,14 +227,14 @@ div.write {
   margin-left: 50px;
 }
 .small_Menu_chat1 {
-  border: 1px solid black;
-  border-radius: 5px;
+  border-radius: 10%;
   margin-right: 20px;
-  font-size: 18px;
-  margin-top: 15px;
-  padding: 5px 5px;
+  font-size: 14px;
+  margin-top: 35px;
+  padding: 7px 10px;
   cursor: pointer;
-  background-color: lightgray;
+  background-color: #96b1d0;
+  color: white;
 }
 .chat_wrapper {
   position: relative;
@@ -373,14 +373,14 @@ div.write {
   margin-left: 50px;
 }
 .small_Menu_event1 {
-  border: 1px solid black;
   border-radius: 5px;
   margin-right: 20px;
-  font-size: 18px;
-  margin-top: 15px;
-  padding: 5px 5px;
+  font-size: 14px;
+  margin-top: 35px;
+  padding: 7px 10px;
   cursor: pointer;
-  background-color: lightgray;
+  background-color: #96b1d0;
+  color: white;
 }
 .event_wrap {
   position: relative;
@@ -818,8 +818,8 @@ button {
   text-align: left;
   font-size: 0;
   /* 자동으로 넘어가는 설정*/
-  -webkit-animation: 30s slidy ease-in-out infinite;
-  animation: 30s slidy ease-in-out infinite;
+  -webkit-animation: 20s slidy ease-in-out infinite;
+  animation: 20s slidy ease-in-out infinite;
 }
 
 /* object-fit:contain  ---> 가로,세로 비율 유지한채 사이즈 채우는 형식*/

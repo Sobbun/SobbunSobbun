@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load urlparams %}
+{% block title%}소분 리스트{% endblock %}
+{% block content %}
+  <div id="container_history">
+    <h3 style="margin-bottom: 10px; margin-top: 10px;">거래내역</h3>
+    {% for post in posts %}
+      {% if not post.is_deleted %}
+        <div id="content_history">
+         <hr>
+          {% if post.picture %}
+            <img src="{{ post.picture.url }}" alt="">
+          {% else %}
+            <img src="{% static 'img/complete.png' %}" alt="">
+          {% endif %}
+          <h2 style="font-size: 20px;"><a href="{% url 'app:post' post.id %}">{{ post.title }}</a></h2>
+          <p style="font-size: 13px;">{{ post.category }} | {{ post.place }}</p>
+          <br>
+          <h4 style="font-size: 15px;">{{ post.sobun_price }} / {{ post.sobun_unit }}</h4>
+        </div>
+      {% endif%}
+    {% endfor %}
+{% endblock %}

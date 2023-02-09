@@ -7,15 +7,15 @@
     {% for category in categories %}
       <div  class="small_Menu_post1"
             onclick="location.href='{% if selected_category == category.name %}{% url 'app:list' %}{% urlparams page=page_obj.number search=searched %}{% else %}{% url 'app:list' %}{% urlparams page=page_obj.number category=category.name search=searched %}{% endif %}'"
-            style="float:left;{% if selected_category == category.name %}background-color:white;{% endif %}">{{ category.name }}</div>
+            style="float:left;{% if selected_category == category.name %}background-color:skyblue;{% endif %}">{{ category.name }}</div>
     {% endfor %}
   </div>
   <div class="write">
     <a href="{% url 'app:post_create' %}"><button class="w">글쓰기</button></a>
   </div>      
   <div class="search">
-    <input id="searchtext" type="text" placeholder="검색어 입력" value="{{ searched|default_if_none:'' }}">
-    <button class="s" onclick="location.href='{% urlparams page=page_obj.number category=selected_category %}&search=' + document.getElementById('searchtext').value">검색</button>
+    <input id="searchtext" type="text" placeholder="검색어 입력" style="width: 79%; height:93%;" value="{{ searched|default_if_none:'' }}">
+    <button class="s" style="width: 20%; height:100%;" onclick="location.href='{% urlparams page=page_obj.number category=selected_category %}&search=' + document.getElementById('searchtext').value">검색</button>
   </div>
 
   {% if posts %}
