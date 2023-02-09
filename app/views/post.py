@@ -6,7 +6,7 @@ from django.views import generic
 from functools import reduce
 import operator
 from django.urls import reverse_lazy
-from ..models import SobunPost
+from ..models import SobunPost, GoodsCategory
 from ..forms import SobunPostForm
 
 
@@ -31,6 +31,13 @@ class PostListView(LoginRequiredMixin, generic.ListView):
             q &= Q(category__name=category)
 
         return qs.filter(q)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = GoodsCategory.objects.all
+        context['selected_category'] = self.request.GET.get('category')
+        context['searched'] = self.request.GET.get('search')
+        return context
 
 
 class PostDetailView(LoginRequiredMixin, generic.DetailView):
