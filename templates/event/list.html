@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static%}
 {% block title%}이벤트 리스트{% endblock %}
+{% load debug_tags %}
 {% block content %}
 <div class="small_Menu_event" style="width: 600px;height: 50px;display: inline-block;">
   <div class="small_Menu_event1"style="float:left;">진행중</div>
@@ -27,7 +28,7 @@
     {% endfor %}
   </div>
 {% endif %}
-{% if debug and posts %}
+{% if show_debug_data and posts %}
   <ul>
     {% for post in posts %}
       <li><a href="{% url 'event:post' post.id %}">{{ post.title }}</a></li>

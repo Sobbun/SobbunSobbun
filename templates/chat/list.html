@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static%}
 {% block title%}쳇 리스트{% endblock %}
+{% load debug_tags %}
 {% block content %}
   {% comment %} <div class="small_Menu_chat" style="width: 600px;height: 50px;display: inline-block;">
     <div class="small_Menu_chat1"style="float:left;">소분진행중</div>
@@ -24,7 +25,7 @@
     {% endfor %}
   </div>
   {% endif %}
-  {% if rooms and debug %}
+  {% if show_debug_data and rooms %}
     <ul>
       {% for room in rooms %}
         <li><a href="{% url 'chat:room' room.id %}">{{ room.id }}</a></li>

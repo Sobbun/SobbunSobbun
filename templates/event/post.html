@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
-{% block title%}소분 리스트{% endblock %}
+{% block title%}{{ post.title }} - 이벤트{% endblock %}
 {% load render_helper %}
+{% load debug_tags %}
 {% block content %}
   {% if post %}
     <div id="container_event_detail">
@@ -25,7 +26,7 @@
     </div>
   {% endif %}
   <div style="clear: left" ></div>
-  {% if debug and post and false%}
+  {% if show_debug_data and post and false%}
   <div>
     <p>Title : {{ post.title }}</p>
     <p>Description : {{ post.description }}</p>

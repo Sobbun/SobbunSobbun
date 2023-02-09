@@ -26,6 +26,11 @@ rate_patterns = [
     path("<int:pk>", views.RateDetailView.as_view(), name="rate"),
 ]
 
+temp_patterns = [
+    path("request_create/<int:sobun_id>", views.temp_request_chat_create, name="temp_request_chat_create"),
+    path("request_complete/<int:sobun_id>/redirect/<int:chat_id>", views.temp_request_chat_complete, name="temp_request_chat_complete")
+]
+
 urlpatterns = [
     path("", views.index, name="index"),
     path("list", views.PostListView.as_view(), name="list"),
@@ -33,6 +38,6 @@ urlpatterns = [
     path("request/", include(request_patterns)),
     path("rate/", include(rate_patterns)),
 
-    path("temp_request_create/<int:sobun_id>", views.temp_request_chat_create, name="temp_request_chat_create")
+    path("not_production_ready/temp/", include(temp_patterns))
 ]
 

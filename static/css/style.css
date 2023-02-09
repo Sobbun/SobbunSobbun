@@ -79,7 +79,6 @@ nav ul li {
 div.search {
   height: 40px;
   width: 400px;
-  border: 1px solid black;
   margin-top: 15px;
   margin-left: 5px; /*왜 안먹지??*/
   padding: 0;
@@ -295,7 +294,6 @@ div.write {
 }
 /*왼쪽 말풍선 꼬리 생성*/
 .wrap .chat_ch1 .textbox::before {
-  font-family: var(--bs-font-monospace);
   left: -18px;
   content: "◀";
   color: #ddd;
@@ -313,7 +311,6 @@ div.write {
 }
 
 .wrap .chat_ch2 .textbox::before {
-  font-family: var(--bs-font-monospace);
   right: -15px;
   content: "▶";
   color: #40f608;
@@ -528,7 +525,7 @@ div.write {
 .loginbox {
   width: 780px;
   height: 550px;
-  margin: 0 auto;
+  margin: 50px auto;
 }
 .loginbox h2 {
   width: 100%;
@@ -691,11 +688,6 @@ button {
   margin: auto;
 }
 
-* {
-  padding: 0;
-  margin: 0;
-}
-
 button {
   cursor: pointer;
 }
@@ -703,7 +695,7 @@ button {
 .loginbox_5 {
   width: 780px;
   height: 550px;
-  margin: 0 auto;
+  margin: 200px auto;
 }
 .loginbox_5 form {
   width: 100%;
