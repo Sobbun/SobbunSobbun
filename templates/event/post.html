@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block title%}소분 리스트{% endblock %}
+{% load render_helper %}
 {% block content %}
   {% if post %}
     <div id="container_event_detail">
@@ -11,16 +12,21 @@
 
       <div id="con" style="width: 100%; margin-top: 20px; float:left;">
         <hr>
-        <p style="margin-top: 10px; text-align: left;">{{ post.description }}</p>
-        <br>
-        {% if post.picture %}
+          {% for line in post.description|render_image_tag:'src=[event_static]|style=width:100%;'|spliter:'[newline]' %}
+            {% if line|is_empty_helper %}
+              <p style="margin-top: 10px; text-align: left;">{{ line|safe }}</p>
+              <br>
+            {% endif %}
+          {% endfor%}
+        {% comment %} {% if post.picture %}
           <img src="{{ post.picture.url }}" alt="" style="width: 50%; height: 50%; margin-top: 20px;">
-        {% endif %}
+        {% endif %} {% endcomment %}
       </div>
     </div>
   {% endif %}
-  {% if debug and post %}
-  <div style="clear: left">
+  <div style="clear: left" ></div>
+  {% if debug and post and false%}
+  <div>
     <p>Title : {{ post.title }}</p>
     <p>Description : {{ post.description }}</p>
     <p>User : {{ post.user }}</p>
