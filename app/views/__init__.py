@@ -1,6 +1,6 @@
 import common.views as commonViews
 
-from .post import PostListView, PostDetailView, PostCreateView
+from .post import PostListView, PostDetailView, PostCreateView, PostHistoryListView
 from .request import RequestListView, PostRequestListView, RequestCreateView, RequestDetailView, RequestUpdateView
 from .rate import RateCreateView, RateDetailView, RateListView, RateUserListView
 

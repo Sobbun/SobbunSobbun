@@ -6,7 +6,7 @@ from django.views import generic
 from functools import reduce
 import operator
 from django.urls import reverse_lazy
-from ..models import SobunPost, GoodsCategory
+from ..models import SobunPost, GoodsCategory, Sobun
 from ..forms import SobunPostForm
 
 
@@ -63,3 +63,15 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
         form.instance.user = self.request.user
         form.instance.is_deleted = False
         return super().form_valid(form)
+
+
+class PostHistoryListView(LoginRequiredMixin, generic.ListView):
+    model = SobunPost
+    ordering = '-updated_at'
+    context_object_name = 'posts'
+    paginate_by = 10
+    template_name = 'app/sobun/history.html'
+
+    def get_queryset(self):
+        sobuns =  Sobun.objects.filter(Q(user=self.request.user) | Q(post__user=self.request.user))
+        return SobunPost.objects.filter(sobun__in=sobuns)

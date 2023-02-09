@@ -7,6 +7,7 @@ app_name = "app"
 post_patterns = [
     path("<int:pk>", views.PostDetailView.as_view(), name='post'),
     path("create", views.PostCreateView.as_view(), name='post_create'),
+    path("history", views.PostHistoryListView.as_view(), name='history')
 ]
 
 request_patterns = [
