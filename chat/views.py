@@ -30,7 +30,7 @@ class ChatRoomView(LoginRequiredMixin, generic.DetailView, generic.FormView):
     def dispatch(self, request, *args, **kwargs):
         self.object = get_object_or_404(ChatRoom, pk=kwargs['pk'])
         if not self.object.participants.contains(self.request.user):
-            return HttpResponseForbidden("User is not participants")        
+            return HttpResponseForbidden("User is not participants")
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
@@ -69,7 +69,7 @@ class UpdateMessageView(LoginRequiredMixin, generic.UpdateView, generic.FormView
     def dispatch(self, request, *args, **kwargs):
         self.message = get_object_or_404(ChatMessage, pk=kwargs['pk'])
         if self.message.author != self.request.user:
-            return HttpResponseForbidden("User is not has a right of this message")        
+            return HttpResponseForbidden("User is not has a right of this message")
         return super().dispatch(request, *args, **kwargs)
 
 

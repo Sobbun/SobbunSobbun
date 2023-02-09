@@ -8,10 +8,11 @@ from .models import User, Profile
 
 
 class SignupForm(UserCreationForm):
-
+    # 전화번호 Validation 기능이 있는 Field
     phone = PhoneNumberField(region='KR')
 
     class Meta:
+        # ModelForm에서 사용할 모델
         model = User
 
         fields = ['username', 'password1', 'password2', 'phone']

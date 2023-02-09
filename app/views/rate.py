@@ -9,7 +9,7 @@ from django.urls import reverse
 from ..models import Sobun, SobunRate, SobunStatus
 from ..forms import SobunRateForm
 
-# 조회
+# 게시글 조회
 class RateListView(LoginRequiredMixin, generic.ListView):
     model = SobunRate
     ordering = '-created_at'
@@ -42,7 +42,7 @@ class RateCreateView(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         # 완료된 소분 내역이 없을시 + 요청 유저가 둘 중 하나가 아닐시
         sobun_query = Sobun.objects.filter(
-            Q(user=self.request.user.id) | Q(post__user=self.request.user.id), 
+            Q(user=self.request.user.id) | Q(post__user=self.request.user.id),
             pk=self.kwargs['sobun_id'], status=SobunStatus.COMPLETE)
         if not sobun_query.exists():
             raise BadRequest("This sobun can't be rated")
@@ -74,15 +74,8 @@ class RateCreateView(LoginRequiredMixin, generic.CreateView):
         pk = self.object.id
         return reverse("app:rate", kwargs={"pk": pk})
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
 
 class RateDetailView(LoginRequiredMixin, generic.DetailView):
     model = SobunRate
     context_object_name = 'rate'
     template_name = 'app/rate/view.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
