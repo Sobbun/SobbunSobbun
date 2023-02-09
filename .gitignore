@@ -140,5 +140,6 @@ GitHub.sublime-settings
 .history
 
 
-# some static #
-!static/**/lib
+# some #
+*.sqlite3
+*.csv

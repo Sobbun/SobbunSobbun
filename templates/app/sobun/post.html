@@ -20,7 +20,7 @@
         <p style="font-size: 15px; margin-top: 10px;"> {{ post.area|default_if_none:'전국' }} </p>
        </div>      
        <div id="deal" style="float: right;">
-          <a href="{% url 'app:request_create' post.id %}">
+          <a href="{% url 'app:temp_request_chat_create' post.id %}">
           <button style="background-color: #58CCFF; float: right; border: none;
                         color: black; width: 100px; height: 40px; border-radius: 5px;
                         font-size: 15px; font-weight: bold;"> 거래 요청 </button></a>

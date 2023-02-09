@@ -18,7 +18,7 @@
         <li>
           <a href="{% url 'app:request' rate.sobun.id %}">{{ rate.sobun }}</a>,
           <a href="{% url 'app:rate' request.id %}">
-              Rate From {{ rate.user_to }} to You, 
+              Rate From {{ rate.user_from }} to You, 
               {{ rate.type }} / {{ rate.detail }},
               {{ rate.created_at }}
             </a>

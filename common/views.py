@@ -1,5 +1,5 @@
 from .forms import SignupForm, UpdateProfileForm
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views import generic
@@ -21,6 +21,15 @@ class SignupView(generic.CreateView):
     form_class = SignupForm
     success_url = reverse_lazy('common:profile_edit')
     template_name = 'common/signup.html'
+
+    def form_valid(self, form):
+        _ = super().form_valid(form)
+        form.save()
+        username = form.cleaned_data('username')
+        raw_password = form.cleaned_data('password1')
+        user = authenticate(username=username, password=raw_password)
+        login(self.request, user)
+        return _
 
 
 class UpdateProfileView(LoginRequiredMixin, generic.UpdateView):

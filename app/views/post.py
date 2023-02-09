@@ -1,7 +1,10 @@
 from django.http import Http404
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.views import generic
+from functools import reduce
+import operator
 from django.urls import reverse_lazy
 from ..models import SobunPost
 from ..forms import SobunPostForm
@@ -17,7 +20,17 @@ class PostListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.filter(is_deleted=False)
+
+        search = self.request.GET.get('search')
+        category = self.request.GET.get('category')
+
+        q = Q(is_deleted=False)
+        if search:
+            q &= reduce(operator.and_, (Q(title__contains=x) for x in search.split() ))
+        if category:
+            q &= Q(category__name=category)
+
+        return qs.filter(q)
 
 
 class PostDetailView(LoginRequiredMixin, generic.DetailView):

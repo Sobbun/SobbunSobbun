@@ -159,6 +159,15 @@ div.write {
   cursor: pointer;
   background-color: lightgray;
 }
+.post_wrapper {
+  position: relative;
+  min-height: 100%;
+  padding-bottom: 240px;
+}
+.post_wrapper footer {
+  position: absolute;
+  bottom: 0;
+}
 /**********게시판(참여자입장)**********/
 * {
   margin: 0;
@@ -174,6 +183,15 @@ div.write {
   clear: both;
   margin: 0 auto;
   width: 80%;
+}
+.buyer_wrapper {
+  position: relative;
+  min-height: 100%;
+  padding-bottom: 240px;
+}
+.buyer_wrapper footer {
+  position: absolute;
+  bottom: 0;
 }
 
 /********** 채팅 **********/
@@ -219,7 +237,16 @@ div.write {
   cursor: pointer;
   background-color: lightgray;
 }
+.chat_wrapper {
+  position: relative;
+  min-height: 100%;
+  padding-bottom: 240px;
+}
 
+.chat_wrapper footer {
+  position: absolute;
+  bottom: 0;
+}
 /********** 채팅방 **********/
 .chatwrap {
   margin: 30px auto;
@@ -356,12 +383,32 @@ div.write {
   cursor: pointer;
   background-color: lightgray;
 }
+.event_wrap {
+  position: relative;
+  min-height: 100%;
+  padding-bottom: 240px;
+}
+
+.event_wrap footer {
+  position: absolute;
+  bottom: 0;
+}
 /************************이벤트 상세페이지 ******************/
 #container_event_detail {
   margin: 0 auto;
   text-align: center;
   width: 80%;
   margin-top: 30px;
+}
+.event_wrapper {
+  position: relative;
+  min-height: 100%;
+  padding-bottom: 600px;
+}
+
+.event_wrapper footer {
+  position: absolute;
+  bottom: 0;
 }
 /************************마이 페이지 ******************/
 #container_mypage {
@@ -373,6 +420,16 @@ div.write {
   clear: both;
   margin: 0 auto;
   width: 80%;
+}
+.mypage_wrap {
+  position: relative;
+  min-height: 100%;
+  padding-bottom: 240px;
+}
+
+.mypage_wrap footer {
+  position: absolute;
+  bottom: 0;
 }
 /************************찜 ******************/
 #container_wishlist {
@@ -409,7 +466,16 @@ div.write {
   border-radius: 5px;
   float: right;
 }
+.wishlist_wrapper {
+  position: relative;
+  min-height: 100%;
+  padding-bottom: 240px;
+}
 
+.wishlist_wrapper footer {
+  position: absolute;
+  bottom: 0;
+}
 /******************거래내역*****************/
 #container_history {
   margin: 50px auto;
@@ -436,7 +502,15 @@ div.write {
   text-decoration: underline;
   color: #58ccff;
 }
-
+.history_wrapper {
+  position: relative;
+  min-height: 100%;
+  padding-bottom: 240px;
+}
+.history_wrapper footer {
+  position: absolute;
+  bottom: 0;
+}
 /******************로그인1****************/
 .login1_logo {
   display: block;
@@ -518,17 +592,28 @@ div.write {
 .login2_logo {
   display: block;
   margin: auto;
+  margin-top: 50px;
 }
 
-.logwrap button {
+.logWrap button {
   cursor: pointer;
+  height: 30px;
 }
 
-.logwrap a {
+.logWrap a {
   text-decoration: none;
   color: black;
 }
+.logWrap {
+  margin-left: 620px;
+  margin-top: 80px;
+}
 
+#log_text {
+  width: 300px;
+  height: 30px;
+  margin-bottom: 20px;
+}
 /*******************로그인3****************************/
 #container_login3 {
   text-align: left;
@@ -762,7 +847,7 @@ button {
 .real_body_wrapper {
   margin-top: 10px;
 }
-/* ************ 게시판 글쓰기  ************/
+/* ************ 게시판 글작성  ************/
 * {
   margin: 0 auto;
   padding: 0;
@@ -856,6 +941,16 @@ button {
   height: 100%;
   object-fit: fill;
 }
+
+.write_wrapper {
+  position: relative;
+  min-height: 100%;
+  padding-bottom: 240px;
+}
+.write_wrapper footer {
+  position: absolute;
+  bottom: 0;
+}
 /************* 유저평가 ************/
 .rating_main {
   width: 80%;
@@ -918,12 +1013,13 @@ footer {
   border-top: 1px solid #333;
   width: 100%;
   margin-top: 50px;
+  height: 200px;
 }
 footer .inner {
-  padding: 40px 0 60px 0;
+  padding-top: 0;
 }
 footer .info {
-  margin-top: 30px;
+  margin-top: 20px;
   text-align: center;
 }
 footer .info span {
@@ -943,4 +1039,9 @@ footer .copyright {
 footer .logo {
   display: block;
   margin: auto;
+}
+
+html,
+body {
+  height: 100%;
 }

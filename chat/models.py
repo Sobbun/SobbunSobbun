@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.functional import cached_property
 from django.contrib.auth import get_user_model
 
-from app.models import SobunPost
+from app.models import SobunPost, Sobun as SobunRequest
 from event.models import Event
 
 User = get_user_model()
@@ -13,6 +13,7 @@ class Topic(models.IntegerChoices):
     USER = 2
     POST_SOBUN = 3
     POST_EVENT = 4
+    APP_SOBUN_REQUEST = 11
 
 class ChatRoom(models.Model):
     # 채팅 참여자
@@ -41,6 +42,8 @@ class ChatRoom(models.Model):
                 return SobunPost.objects.get(pk=self.topic_id)
             case Topic.POST_EVENT:
                 return Event.objects.get(pk=self.topic_id)
+            case Topic.APP_SOBUN_REQUEST:
+                return SobunRequest.objects.get(pk=self.topic_id)
             case _:
                 raise AssertionError("Unknown Topic Type")
     
@@ -54,6 +57,22 @@ class ChatRoom(models.Model):
                 return self.topic.profile.nickname
             case Topic.POST_SOBUN | Topic.POST_EVENT:
                 return self.topic.title
+            case Topic.APP_SOBUN_REQUEST:
+                return self.topic.post.user.profile.nickname
+            case _:
+                raise AssertionError("Unknown Topic Type")
+    
+    @cached_property
+    def topic_title_alt(self):
+        match self.topic_type:
+            case Topic.TEXT:
+                return self.topic_text
+            case Topic.USER:
+                return self.topic.profile.nickname
+            case Topic.POST_SOBUN | Topic.POST_EVENT:
+                return self.topic.title
+            case Topic.APP_SOBUN_REQUEST:
+                return self.topic.user.profile.nickname
             case _:
                 raise AssertionError("Unknown Topic Type")
 
@@ -65,6 +84,14 @@ class ChatRoom(models.Model):
             # 캐시 삭제 시도
             try:
                 del self.topic
+            except AttributeError:
+                pass
+            try:
+                del self.topic_title
+            except AttributeError:
+                pass
+            try:
+                del self.topic_title_alt
             except AttributeError:
                 pass
 
@@ -96,6 +123,11 @@ class ChatRoom(models.Model):
                 self.topic_type = Topic.POST_EVENT
                 self.topic_id = instance.id
             
+            case SobunRequest():
+                cleanup()
+                self.topic_type = Topic.APP_SOBUN_REQUEST
+                self.topic_id = instance.id
+
             case _:
                 # raise AssertionError("Unknown Topic Type") 
                 return False

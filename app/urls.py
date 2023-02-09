@@ -31,6 +31,8 @@ urlpatterns = [
     path("list", views.PostListView.as_view(), name="list"),
     path("post/", include(post_patterns)),
     path("request/", include(request_patterns)),
-    path("rate/", include(rate_patterns))
+    path("rate/", include(rate_patterns)),
+
+    path("temp_request_create/<int:sobun_id>", views.temp_request_chat_create, name="temp_request_chat_create")
 ]
 

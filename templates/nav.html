@@ -20,15 +20,23 @@
     <li class="topnav">
       <a href="{% url 'common:mypage' %}"><div class="topnav_menu">마이페이지</div></a>
     </li>
-    <li class="login">
-      <a href="{% url 'common:login' %}"
-        ><div class="login_menu">로그인</div></a
-      >
-    </li>
-    <li class="login">
-      <a href="{% url 'common:signup' %}"
-        ><div class="login_menu">회원가입</div></a
-      >
-    </li>
+    {% if request.user.is_authenticated %}
+      <li class="login">
+        <a href="{% url 'common:logout' %}"
+          ><div class="login_menu">로그아웃</div></a
+        >
+      </li>
+    {% else %}
+      <li class="login">
+        <a href="{% url 'common:login' %}"
+          ><div class="login_menu">로그인</div></a
+        >
+      </li>
+      <li class="login">
+        <a href="{% url 'common:signup' %}"
+          ><div class="login_menu">회원가입</div></a
+        >
+      </li>
+    {% endif %}
   </ul>
 </nav>

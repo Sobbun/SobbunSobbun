@@ -20,7 +20,42 @@
         </div>
               
   </div>
+  {% elif room.topic_type == 11 %}
+  <div class="chatProfile" style="height: 90px;">
+    <p>소분 요청 거래임</p>
+    {% if room.topic.user == request.user %}
+
+      {% if room.topic.user.profile.picture %}
+        <div class="profile_icon"><i class="fa-regular"><img style="height:100px"src="{{ room.topic.user.profile.picture.url }}"></i></div>
+      {% else %} 
+        <div class="profile_icon"><i class="fa-regular fa-circle-user"></i></div>
+      {% endif %}
+        <div class="chatName" style="float: left;">
+          <h1 style="margin-top: 0px;">{{ room.topic.user.profile.nickname }}</h1>
+          <p style="font-size: 15px; margin-top: 10px;">{{ room.topic.user.profile.bio }}</p></div>
+        
+        <div class="trust" style="float:right;">
+          <h3 style="font-size: 15px; margin-top:20px; margin-bottom:3px;"> 신뢰도 {{ room.topic.user.trust_level.level|floatformat:"0" }}% </h3>
+          <progress max="100" value="{{ room.topic.trust_level.level|floatformat:"0" }}" style="width: 80px; height: 20px;"></progress>
+        </div>
+    {% else %}
+      {% if room.topic.post.user.profile.picture %}
+        <div class="profile_icon"><i class="fa-regular"><img style="height:100px"src="{{ room.topic.post.user.profile.picture.url }}"></i></div>
+      {% else %} 
+        <div class="profile_icon"><i class="fa-regular fa-circle-user"></i></div>
+      {% endif %}
+        <div class="chatName" style="float: left;">
+          <h1 style="margin-top: 0px;">{{ room.topic.post.user.profile.nickname }}</h1>
+          <p style="font-size: 15px; margin-top: 10px;">{{ room.topic.post.user.profile.bio }}</p></div>
+          
+          <div class="trust" style="float:right;">
+            <h3 style="font-size: 15px; margin-top:20px; margin-bottom:3px;"> 신뢰도 {{ room.topic.user.trust_level.level|floatformat:"0" }}% </h3>
+            <progress max="100" value="{{ room.topic.user.trust_level.level|floatformat:"0" }}" style="width: 80px; height: 20px;"></progress>
+          </div>
+    {% endif %}
+  </div>
   {% endif %}
+
   <hr style="border: solid 1px gray; margin-top: 0px" />
 
   <div class="wrap">
