@@ -11,4 +11,6 @@ urlpatterns = [
 
     path('my', views.MypageView.as_view(), name='mypage'),
     path('profile/edit', views.UpdateProfileView.as_view(), name='profile_edit'),
+    path('profile/new', views.SignupUpdateProfileView.as_view(), name='profile_new'),
+    path('welcome', views.WelcomeView.as_view(), name='welcome'),
 ]

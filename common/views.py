@@ -1,5 +1,5 @@
 from .forms import SignupForm, UpdateProfileForm
-from django.contrib.auth import get_user_model, login, authenticate
+from django.contrib.auth import get_user_model, login, authenticate, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views import generic
@@ -30,7 +30,7 @@ class SignupView(generic.CreateView):
         return _
 
     def get_success_url(self) -> str:
-        return reverse('common:profile_edit') + '?next=/common/logout'
+        return reverse('common:profile_new')
 
 class UpdateProfileView(LoginRequiredMixin, generic.UpdateView):
     form_class = UpdateProfileForm
@@ -45,3 +45,13 @@ class UpdateProfileView(LoginRequiredMixin, generic.UpdateView):
         if next:
             return next
         return super().get_success_url()
+
+class SignupUpdateProfileView(UpdateProfileView):
+    success_url = reverse_lazy('common:welcome')
+    template_name = 'common/profile/new_edit.html'
+
+
+class WelcomeView(generic.View):
+    def get(self, request):
+        logout(self.request)
+        return render(request, 'common/welcome.html')

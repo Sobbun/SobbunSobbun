@@ -74,6 +74,19 @@ class RateCreateView(LoginRequiredMixin, generic.CreateView):
         pk = self.object.id
         return reverse("app:rate", kwargs={"pk": pk})
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        f_nick = self.request.user.profile.nickname
+        context["user_from"] = f_nick if f_nick else self.request.user.username
+
+        sobun = Sobun.objects.get(pk=self.kwargs['sobun_id'])
+        post_user = sobun.post.user
+        sobun_user = sobun.user
+        to_user = post_user if sobun_user == self.request.user else sobun_user
+        t_nick = to_user.profile.nickname
+        context["user_to"] = t_nick if t_nick else to_user.username
+        return context
+
 
 class RateDetailView(LoginRequiredMixin, generic.DetailView):
     model = SobunRate
