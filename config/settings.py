@@ -28,14 +28,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 SHOW_DEBUG_DATA = False
+TRY_CLOUDFLARE = True
 
 ALLOWED_HOSTS = []
 
-# Allow trycloudflare.com when it is debug.
-if DEBUG is True:
-    ALLOWED_HOSTS += ["*"]
+# Allow trycloudflare.com when it is debug or allowed.
+if TRY_CLOUDFLARE or DEBUG:
+    ALLOWED_HOSTS += ['*']
 
 # Application definition
 

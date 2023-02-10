@@ -818,8 +818,8 @@ button {
   text-align: left;
   font-size: 0;
   /* 자동으로 넘어가는 설정*/
-  -webkit-animation: 20s slidy ease-in-out infinite;
-  animation: 20s slidy ease-in-out infinite;
+  -webkit-animation: 10s slidy ease-in-out infinite;
+  animation: 10s slidy ease-in-out infinite;
 }
 
 /* object-fit:contain  ---> 가로,세로 비율 유지한채 사이즈 채우는 형식*/
