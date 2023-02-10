@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.db.models import Q
 from django.http import HttpResponseForbidden, HttpResponseBadRequest
 
 
@@ -18,17 +19,15 @@ def temp_request_chat_create(request, sobun_id):
     if req_created:
         req.save()
     
-    room, room_created = ChatRoom.objects.get_or_create(
-        participants__in=[request.user, post.user], topic_type=Topic.APP_SOBUN_REQUEST, topic_id=req.pk, 
-        defaults={ 
-            'topic_type': Topic.APP_SOBUN_REQUEST,
-            'topic_id': req.pk,
-            'topic_text': ''})
-    if room_created:
+    room = ChatRoom.objects.filter(Q(participants__in=[request.user, post.user]) & Q(topic_type=Topic.APP_SOBUN_REQUEST) & Q(topic_id=req.pk))
+    if not room.exists():
+        print(room)
+        room = ChatRoom.objects.create(topic_type = Topic.APP_SOBUN_REQUEST, topic_id = req.pk, topic_text = "")
         room.participants.add(request.user)
         room.participants.add(post.user)
         room.save()
-
+    else:
+        room = room[0]
     return redirect('chat:room', pk=room.pk )
 
 
