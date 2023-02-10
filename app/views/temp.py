@@ -4,13 +4,16 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponseBadRequest
 
 
 #FIXME: THIS IS CURSED
 def temp_request_chat_create(request, sobun_id):
 
     post = SobunPost.objects.get(id=sobun_id)
+    if request.user == post.user and not request.user.is_superuser:
+        return HttpResponseBadRequest("Can't request to the same user.")
+
     req, req_created = Sobun.objects.get_or_create(post=post, user=request.user, defaults={'post': post, 'user': request.user, 'time': timezone.now(), 'status':SobunStatus.REQUESTED})
     if req_created:
         req.save()

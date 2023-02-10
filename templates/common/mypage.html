@@ -6,13 +6,13 @@
     <div id="pro" style="margin-top: 20px;">
       <div id="profileimg" style="background: lightgray; border-radius: 70%; width: 100px; 
               height: 100px; overflow: hidden; margin-left: 50px; float: left;">
-      {% if form.picture.value %}
-        <img src="{{ form.picture.value.url }}" style="width: 100%; height: 100%; object-fit: cover;">
-      {% elif request.user.profile.picture %}
-        <img src="{{ request.user.profile.picture.url }}" style="width: 100%; height: 100%; object-fit: cover;">
-      {% else%}
-        <img src="{% static 'img/logo.png' %}" style="width: 100%; height: 100%; object-fit: cover;">
-      {% endif %}
+        {% if form.picture.value %}
+          <img src="{{ form.picture.value.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+        {% elif request.user.profile.picture %}
+          <img src="{{ request.user.profile.picture.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+        {% else%}
+          <img src="{% static 'img/fa-user-circle-o-transparent.png' %}" style="width: 100%; height: 100%; object-fit: cover;">
+        {% endif %}
       </div>
       <div id="pro2" style="float: left; text-align: left; margin-left: 10px;">
         <h2 style="font-size: 30px;">  {{ request.user.profile.nickname|default_if_none:request.user.username }} </h2>

@@ -1,4 +1,5 @@
 {% load static %}
+{% include 'form_errors.html' %}
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token%}
   <div id="container_login3">
@@ -9,15 +10,9 @@
       <h4 style="float: left; margin-left: 20px; margin-top: 40px;"> 사진 </h4>
       <div id="profileimg_login3" style="background: lightgray; border-radius: 70%; width: 100px; 
       height: 100px; overflow: hidden; margin-left: 100px;">
-        {% if form.picture.value %}
-          <img src="{{ form.picture.value.url }}" style="width: 100%; height: 100%; object-fit: cover;">
-        {% elif request.user.profile.picture %}
-          <img src="{{ request.user.profile.picture.url }}" style="width: 100%; height: 100%; object-fit: cover;">
-        {% else%}
-          <img src="{% static 'img/logo.png' %}" style="width: 100%; height: 100%; object-fit: cover;">
-        {% endif %}
+        <input id="id_picture" accept="image/*" type="file" name="picture" style='display: none;'> 
+        <img id="preview" src="{% if form.picture.value %}{{ form.picture.value.url }}{% elif request.user.profile.picture %}{{ request.user.profile.picture.url }}{% else%}{% static 'img/upload.png' %}{% endif %}"  width="100px" height="100px" border='0' onclick='document.getElementById("id_picture").click();'> 
       </div>
-      {{ form.picture }}
     </div>
   
     <div style=" margin-top: 40px; margin-left: 15px;">
@@ -39,7 +34,7 @@
     <br>
     <div id="content_login3" style="margin-top: 40px; margin-left: 15px;">
       <h4 style="float: left;"> 자기소개 </h4>
-      <textarea name="bio" id="bio" cols="40" rows="5" style="margin-left: 12px;" />{{ request.user.profile.bio }}</textarea>
+      <textarea name="bio" id="bio" cols="40" rows="5" style="margin-left: 12px;" >{{ request.user.profile.bio }}</textarea>
     </div>
   
     <br>
@@ -50,3 +45,20 @@
     </div>
   </div>
 </form>
+<script>
+    const input = document.getElementById("id_picture");
+    const preview = document.getElementById("preview");
+  
+    input.addEventListener("change", function() {
+      console.log("Change Triggered!")
+      const file = this.files[0];
+  
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function() {
+          preview.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+</script>

@@ -13,13 +13,31 @@
       <div id="container_chat">
         <div id="content_chat">
          <hr>
-          <img src="{% if room.topic.picture %}{{ room.topic.picture.url }}{% else %}{% static 'img/logo.png' %}{% endif %}" alt="" style="width: 90px; height: 90px; margin-top: 15px;">
-          <h2 style="font-size: 20px;"><a href="{% url 'chat:room' room.id %}">{{ room.topic_title }}</a></h2>
+          {% if room.topic.user != request.user %}
+            {% if room.topic.user.profile.picture %}
+              <img src="{{ room.topic.user.profile.picture.url }}" alt="" style="width: 90px; height: 90px; margin-top: 15px;">
+            {% else %}
+              <img src="{% static 'img/fa-user-circle-o-transparent.png' %}" alt="" style="width: 90px; height: 90px; margin-top: 15px;">
+            {% endif %}
+            <h2 style="font-size: 20px;"><a href="{% url 'chat:room' room.id %}">{{ room.topic.user.profile.nickname|default_if_none:room.topic.user.username }}</a></h2>
+          {% else %}
+            {% if room.topic.post.user.profile.picture %}
+                <img src="{{ room.topic.post.user.profile.picture.url }}" alt="" style="width: 90px; height: 90px; margin-top: 15px;">
+              {% else %}
+                <img src="{% static 'img/fa-user-circle-o-transparent.png' %}" alt="" style="width: 90px; height: 90px; margin-top: 15px;">
+              {% endif %}
+              <h2 style="font-size: 20px;"><a href="{% url 'chat:room' room.id %}">{{ room.topic.post.user.profile.nickname|default_if_none:room.topic.user.username }}</a></h2>
+          {% endif %}
+          
           <br>
-          {% with room.messages.last as last_message %}
-            <p style="font-size: 15px;">{{ last_message.content }}</p>
-            <p style="font-size: 13px;">{{ last_message.created_at }}</p>
-          {% endwith %}
+          {% if room.messages.last %}
+            {% with room.messages.last as last_message %}
+              <p style="font-size: 15px;">{{ last_message.content }}</p>
+              <p style="font-size: 13px;">{{ last_message.created_at }}</p>
+            {% endwith %}
+          {% else %}
+            <p style="font-size: 13px;">{{ room.updated_at }}</p>
+          {% endif %}
         </div>
       </div>
     {% endfor %}
@@ -32,6 +50,5 @@
       {% endfor %}
     </ul>
   {% else %}
-  <p>소분 게시글이 없습니다.</p>
   {% endif %}
 {% endblock %}

@@ -131,7 +131,8 @@ class ChatRoom(models.Model):
             case _:
                 # raise AssertionError("Unknown Topic Type") 
                 return False
-
+        
+        self.save()
 
         return True
 

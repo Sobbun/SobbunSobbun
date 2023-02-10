@@ -38,7 +38,7 @@
     {% endfor %}
   </div>
 
-      <ul class="pagination justify-content-center">
+      {% comment %} <ul class="pagination justify-content-center">
         <!-- 이전페이지 -->
         {% if page_obj.has_previous %}
         <li class="page-item">
@@ -51,9 +51,10 @@
         <li class="page-item">
             <a class="page-link" href="?page={{ page_obj.next_page_number }}">다음</a>
         </li>
-        {% endif %}
+        {% endif %} {% endcomment %}
     </ul>
   {% else %}
-  <p>소분 게시글이 없습니다.</p>
+  {% comment %} <p>소분 게시글이 없습니다.</p> {% endcomment %}
   {% endif %}
+  {% include 'footer.html' %}
 {% endblock %}

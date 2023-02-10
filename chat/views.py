@@ -12,14 +12,13 @@ from django.urls import reverse
 
 class ChatRoomListView(LoginRequiredMixin, generic.ListView):
     model = ChatRoom
-    ordering = '-updated_at'
     context_object_name = 'rooms'
     paginate_by = 10
     template_name = 'chat/list.html'
+    ordering = '-updated_at'
 
     def get_queryset(self):
-        return ChatRoom.objects.filter(participants=self.request.user)
-
+        return super().get_queryset().filter(participants=self.request.user)
 
 class ChatRoomView(LoginRequiredMixin, generic.DetailView, generic.FormView):
     model = ChatRoom
@@ -50,6 +49,7 @@ class ChatRoomView(LoginRequiredMixin, generic.DetailView, generic.FormView):
         message.refresh_from_db()
         message.checked_by.add(self.request.user)
         message.save()
+        self.get_object().save()
         return super().form_valid(form)
 
     def get_success_url(self) -> str:
@@ -87,6 +87,8 @@ class UpdateMessageView(LoginRequiredMixin, generic.UpdateView, generic.FormView
 
         self.message.content = form.cleaned_data["content"]
         self.message.save()
+        self.message.refresh_from_db()
+        self.message.room.save()
 
         return super().form_valid(form)
 
