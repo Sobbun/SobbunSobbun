@@ -1,22 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>회원가입 - 소뿐소뿐</title>
 
-{% extends 'base.html' %}
-{% block title %}가입{% endblock %}
-{% block content%}
-  {% include "form_errors.html" %}
-  <form method="post">
-    {% csrf_token %}
-    <div class="logWrap">
-      <label><b>회원 ID</b></label><br>
-      <input class="log_text" type="text" name="username" id="id_username" required placeholder="내용을 입력해주세요" value="{{ form.username.value|default_if_none:'' }}"><br>
-      <label><b>비밀번호</b></label><br>
-      <input class="log_text" type="password" name="password1" autocomplete="new-password" required id="id_password1" placeholder="내용을 입력해주세요" value="{{ form.password1.value|default_if_none:'' }}"><br>
-      {% comment %} <button class="log_text" type="submit">인증번호 받기</button><br> {% endcomment %}
-      <label><b>비밀번호 확인</b></label><br>
-      <input class="log_text" type="password" name="password2" autocomplete="new-password" required id="id_password2" placeholder="내용을 입력해주세요" value="{{ form.password2.value|default_if_none:'' }}"><br>
-      {% comment %} <button class="log_text" type="submit">중복확인</button><br> {% endcomment %}
-      <label><b>전화번호</b></label><br>
-      <input class="log_text" type="tel" name="phone" required id="id_phone" placeholder="내용을 입력해주세요"><br><br>
-      <button type="submit">다음</button>
-    </div>
-  </form>
-{% endblock %}
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    {% load static %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/lib/bootstrap-5.2.3.min.css' %}"
+    />
+    <script defer src="{% static 'js/lib/bootstrap-5.2.3.min.js' %}"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.css' %}"
+    />
+  </head>
+    <body>
+      <img src="{% static 'img/logo.png' %}" align="center" width="150" height="150" class="login2_logo" />
+      <form method="POST" onsubmit="return validation()">
+        {% csrf_token %}
+        {% include "form_errors.html" %}
+        <div class="logWrap">
+          <label><b>회원 ID</b></label><br>
+          <input class="log_text" type="text" name="username" required placeholder="내용을 입력해주세요" value="{{ form.username.value|default_if_none:'' }}"><br>
+          <label><b>비밀번호</b></label><br>
+          <input class="log_text" type="password" name="password1" autocomplete="new-password" required id="id_password1" placeholder="내용을 입력해주세요" value="{{ form.password1.value|default_if_none:'' }}">
+          <pre></pre>
+          <label><b>비밀번호 확인</b></label><br>
+          <input class="log_text" type="password" name="password2" autocomplete="new-password" required id="id_password2" placeholder="내용을 입력해주세요" value="{{ form.password2.value|default_if_none:'' }}">
+          <pre></pre>
+          <label><b>전화번호</b></label><br>
+          <input class="log_text" type="tel" name="phone" required id="id_phone" placeholder="내용을 입력해주세요" value="{{ form.phone.value|default_if_none:'' }}" ><br><br>
+          <b style="margin-right: 37px;">개인 정보 동의</b>
+          <label><input type="radio" name="personal" value="agree">동의</label>
+          <label><input type="radio" name="personal" value="refuse"> 미동의</label>
+          <br><b id="disallowed_personal" hidden style="color: red">개인 정보 동의를 해야합니다.</b></br>
+          <pre></pre>
+          <b>위치 정보 제공 동의</b>
+          <label><input type="radio" name="loc" value="agree" > 동의</label>
+          <label><input type="radio" name="loc" value="refuse"> 미동의</label>
+          <br><b id="disallowed_loc" hidden style="color: red;">위치 정보 제공 동의를 해야합니다.</b><br>
+          <button type="submit" style="height: 40px; width:100px;background-color:#58CCFF;font-style:white;border:none;border-radius:10%;margin-left:210px"><span style="color:white;">다음</span></button>
+        </div>
+      </form>
+      <script>
+        function validation() {
+          let result = true
+
+          const personal = [...document.getElementsByName("personal")].filter(x => x.checked)?.[0]?.value
+          const loc = [...document.getElementsByName("loc")].filter(x => x.checked)?.[0]?.value
+
+          if (personal === "agree") {
+            document.getElementById("disallowed_personal").hidden = true
+          } else {
+            result = false
+            document.getElementById("disallowed_personal").hidden = false
+          }
+
+          if (loc === "agree") {
+            document.getElementById("disallowed_loc").hidden = true
+          } else {
+            result = false
+            document.getElementById("disallowed_loc").hidden = false
+          }
+          return result;
+        }
+      </script>
+    </body>
+</html>

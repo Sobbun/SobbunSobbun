@@ -608,7 +608,7 @@ div.write {
   margin-top: 80px;
 }
 
-#log_text {
+.log_text {
   width: 300px;
   height: 30px;
   margin-bottom: 20px;
@@ -902,7 +902,7 @@ button {
   cursor: pointer;
 }
 
-#container_postWrite input[type="datetime-local"]::-webkit-datetime-edit-text {
+/* #container_postWrite input[type="datetime-local"]::-webkit-datetime-edit-text {
   -webkit-appearance: none;
   display: none;
 }
@@ -920,7 +920,7 @@ button {
   input[type="datetime-local"]::-webkit-datetime-edit-year-field {
   -webkit-appearance: none;
   display: none;
-}
+} */
 
 #container_postWrite select {
   border-radius: 4px;

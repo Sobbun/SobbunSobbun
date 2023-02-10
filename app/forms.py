@@ -7,7 +7,7 @@ from .models import SobunPost, Sobun, SobunRate
 class SobunPostForm(forms.ModelForm):
     class Meta:
         model = SobunPost
-        exclude = ['is_deleted', 'user', 'area','picture']
+        exclude = ['is_deleted', 'user', 'area', 'tags']
 
 
 class SobunForm(forms.ModelForm):

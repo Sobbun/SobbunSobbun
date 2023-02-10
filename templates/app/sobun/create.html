@@ -1,21 +1,90 @@
 
 {% extends 'base.html' %}
 {% block title %}소분 게시글 작성{% endblock %}
+{% load static %}
+{% load  debug_tags %}
 {% block content%}
-    <form method="post">
+<div id="container_postWrite">
+  <h1 style="margin-top: 20px;">글쓰기</h1>
+  <hr>
+  <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-          <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-      </p>
-    {% endfor %}
+    <div style="float: left; padding-left: 5%; padding-right: 30px">
+        <input id="id_picture" accept="image/*" type="file" name="picture" style='display: none;'> 
+        <img id="preview" src={% static 'img/left_arrow.png' %}  border='0' onclick='document.getElementById("id_picture").click();'> 
+    </div>
+    <div>
+        <input type="text" required name="title" placeholder="제목" onfocus="this.placeholder = ''" onblur="this.placeholder = '제목'" />
+    </div>
+
+    <div>
+        <input type="text" required name="product" placeholder="상품명" onfocus="this.placeholder = ''" onblur="this.placeholder = '상품명'" />
+    </div>
+
+    <div>
+      <input type="text" required name="place" placeholder="장소" onfocus="this.placeholder = ''" onblur="this.placeholder = '상품명'" />
+    </div>
+
+    <div>
+        <input name="schedule" required  type="datetime-local" style="width: 18.5%;">
+        <input name="sobun_price" required type="number" style="width: 15%;" placeholder="소분 가격" onfocus="this.placeholder = ''" onblur="this.placeholder = '가격(원)'" />
+        <input name="sobun_unit" required type="text" style="width: 15%;" placeholder="소분 단위" onfocus="this.placeholder = ''" onblur="this.placeholder = '단위(개)'" />
+    </div>
+    <div>
+        <select name="category">
+          {% for id, name in form.fields.category.choices %}
+            {% if id == form.field.category.choices.0 %}
+              <option value="{{ id }}"{% if form.fields.category.value == id %} selected{% endif %}>카태고리 선택</option>
+            {% else %}
+              <option value="{{ id }}"{% if form.fields.category.value == id %} selected{% endif %}>{{ name }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+    </div>
+
+    <div>
+        <textarea name="description" placeholder="내용" onfocus="this.placeholder = ''" onblur="this.placeholder = '내용'"></textarea>    
+    </div>
+
+    <div>
+      <button type="submit"><span style="color:white;">글 작성</span></button>
+    </div>
+  </form>
+</div>
+<br style="clear: left;"><br>
+<script>
+  const input = document.getElementById("id_picture");
+  const preview = document.getElementById("preview");
+
+  input.addEventListener("change", function() {
+    console.log("Change Triggered!")
+    const file = this.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function() {
+        preview.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+</script>
+{% if show_debug_data %}
+    <form method="post">
+      {% csrf_token %}
+      {% for field in form %}
+        <p>
+          {{ field.label_tag }}<br>
+          {{ field }}
+          {% if field.help_text %}
+            <small style="color: grey">{{ field.help_text }}</small>
+          {% endif %}
+          {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+          {% endfor %}
+        </p>
+      {% endfor %}
     <button type="submit">Sign up</button>
   </form>
+{% endif %}
 {% endblock %}
