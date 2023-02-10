@@ -11,7 +11,7 @@
     {% csrf_token %}
     <div style="float: left; padding-left: 5%; padding-right: 30px">
         <input id="id_picture" accept="image/*" type="file" name="picture" style='display: none;'> 
-        <img id="preview" src={% static 'img/left_arrow.png' %}  border='0' onclick='document.getElementById("id_picture").click();'> 
+        <img id="preview" src={% static 'img/upload.png' %}  border='0' onclick='document.getElementById("id_picture").click();'> 
     </div>
     <div>
         <input type="text" required name="title" placeholder="제목" onfocus="this.placeholder = ''" onblur="this.placeholder = '제목'" />
