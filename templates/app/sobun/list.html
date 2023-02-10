@@ -15,7 +15,7 @@
   </div>      
   <div class="search">
     <input id="searchtext" type="text" placeholder="검색어 입력" style="width: 79%; height:93%;" value="{{ searched|default_if_none:'' }}">
-    <button class="s" style="width: 20%; height:100%;" onclick="location.href='{% urlparams page=page_obj.number category=selected_category %}&search=' + document.getElementById('searchtext').value">검색</button>
+    <button class="s" style="width: 20%; height:100%;" onclick="location.href='{% urlparams page='1' category=selected_category %}&search=' + document.getElementById('searchtext').value">검색</button>
   </div>
 
   {% if posts %}
@@ -56,5 +56,4 @@
   {% else %}
   {% comment %} <p>소분 게시글이 없습니다.</p> {% endcomment %}
   {% endif %}
-  {% include 'footer.html' %}
 {% endblock %}
