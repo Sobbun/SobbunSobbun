@@ -54,3 +54,8 @@ def spliter(value, _arg):
 
     l = value.split(arg)
     return [i.strip() for i in l]
+
+
+@register.filter
+def remove_image_tag(value):
+    return re.sub(r"\[image\s+[\"'](.+?)[\"']\]", '', value)
